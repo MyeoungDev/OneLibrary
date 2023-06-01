@@ -17,39 +17,36 @@ public class Main {
     }
 
     public void openCenter(){
-        System.out.println("----도서관----");
         boolean isClose = false;
-        System.out.println("");
-        System.out.println("안녕하세요! 도서관 커뮤니티 센터입니다.");
+        System.out.println("\n안녕하세요! 도서관 커뮤니티 센터입니다.");
         Scanner scan = new Scanner(System.in);
         String command;
         while(!isClose) {
             this.displayMainMenu();
             command = scan.nextLine();
+            System.out.println("--------------------------------------");
             switch(command) {
                 case "1" : displayNotice(); break;
-                case "2" : displayLogin(); break;
+                case "2" : displayLogin(); isClose=true; break;
                 case "3" : displayRegister(); break;
+                case "4" : isClose=true;
             }
         }
-        scan.close();
-        System.out.println("\n\n이용해 주셔서 감사합니다.");
     }
 
     // 메인메뉴 ui
     public void displayMainMenu(){
         System.out.println("--------------------------------------");
-        System.out.println(" 1.공지사항 \n 2.로그인 \n 3.회원가입 \n");
-        System.out.print(" * 메뉴선택: ");
+        System.out.println(" 1.공지사항 \n 2.로그인 \n 3.회원가입 \n 4.종료");
+        System.out.print("\n * 메뉴선택: ");
     }
 
 
     // 공지사항 ui 메소드
     public void displayNotice(){
-        System.out.println("-- 공지 --");
         NoticeCenter notice = new NoticeCenter();
         boolean isClose = false;
-        System.out.println("--------------공지사항--------------");
+        System.out.println("\n\n---------------공지사항---------------");
         Scanner scan = new Scanner(System.in);
         String command = "4";
         while(!isClose) {
@@ -68,24 +65,36 @@ public class Main {
 
     // 로그인 ui 메소드
     public void displayLogin(){
-        System.out.println("---*---로그인---*---");
-        UserService user = new UserService();
-        String id;
-        String pw;
+        while (true){
+            System.out.println("\n\n----*----로그인----*----");
+            UserService user = new UserService();
+            String id;
+            String pw;
 
-        System.out.print("아이디: ");
-        id = scan.nextLine();
-        System.out.print("비밀번호: ");
-        pw = scan.nextLine();
-        boolean isSuccess = user.login(id, pw);
+            System.out.print("아이디: ");
+            id = scan.nextLine();
+            System.out.print("비밀번호: ");
+            pw = scan.nextLine();
+            System.out.println("\n1.확인  2.메인으로");
+            String command = scan.nextLine();
 
-        if (isSuccess){
-            System.out.println("로그인 성공");
-        } else {
-            System.out.println("아이디나 비밀번호가 잘못되었습니다. 다시 시도해주세요.");
+            if (command.equals("2")){
+                displayUserMain();
+                break;
+            }
+
+            if (command.equals("1")){
+                boolean isLoginSucceed = user.login(id, pw);
+                if (isLoginSucceed){
+                    System.out.println("\n로그인 성공 \n" );
+                    this.displayUserMain();
+                    break;
+                } else{
+                    System.out.println("\n아이디나 비밀번호가 잘못되었습니다. 다시 시도해주세요.\n");
+                }
+            }
         }
     }
-
 
     // 회원가입 ui 메소드
     public void displayRegister(){
@@ -97,7 +106,7 @@ public class Main {
         String address;
         String email;
 
-        System.out.println("-------회원가입------");
+        System.out.println("========== 회원가입 ==========");
         System.out.print("아이디 : ");
         id = scan.nextLine();
         System.out.print("비밀번호 : ");
@@ -152,12 +161,23 @@ public class Main {
     // 로그인 후 메인 메뉴 ui
     public void displayUserMain(){
         System.out.println("환영합니다.");
-        // 1. 공지사항으로 이동
-        // 2. 커뮤니티로 이동
+        System.out.println("--------------------------------------");
+        boolean isClose = false;
+        while(!isClose) {
+            System.out.println(" 1.공지사항 \n 2.커뮤니티 \n 3.종료");
+            System.out.print("\n * 메뉴선택: ");
+            String command = scan.nextLine();
+            switch(command) {
+                case "1" : displayNotice(); break;
+                case "2" : displayCommunity(); break;
+                case "3" : isClose = true;
+            }
+        }
+
     }
 
     public void displayCommunity(){
-        System.out.println("===커뮤니티===");
+        System.out.println("\n\n========== 커뮤니티 ==========\n");
     }
 
 }

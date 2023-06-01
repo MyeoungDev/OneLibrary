@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class UserService {
-    private UserDao dao;
+    private UserDao dao = new UserDao();
     public boolean register(String id, String password, String name, String phone, String address, String email) throws SQLException, IOException {
         boolean flag = false;
         if(dao.insertUser(id, password, name, phone, address, email)){

@@ -59,7 +59,7 @@ public class UserDao {
 
         // 커넥션
         Connection con = ConnectionManager.getConnection();
-        String sql = "SELECT * FROM bitedu.user where user_id= ? ";
+        String sql = "SELECT * FROM board.user where user_id= ? ";
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setString(1, userId);
         ResultSet rs = pstmt.executeQuery();
