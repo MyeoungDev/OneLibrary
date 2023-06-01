@@ -1,4 +1,4 @@
-package bit.edu.onelibrary.community.entity;
+package bit.edu.onelibrary.user.entity;
 
 public class User {
     private int userNo;

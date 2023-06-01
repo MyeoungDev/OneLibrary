@@ -1,4 +1,4 @@
-package bit.edu.onelibrary.community.service;
+package bit.edu.onelibrary.user.service;
 
 public class UserService {
     public static int IS_ADMIN = 0;

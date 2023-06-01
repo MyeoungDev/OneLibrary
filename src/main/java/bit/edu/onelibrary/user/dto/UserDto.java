@@ -1,4 +1,4 @@
-package bit.edu.onelibrary.community.dto;
+package bit.edu.onelibrary.user.dto;
 
 public class UserDto {
     private int no;

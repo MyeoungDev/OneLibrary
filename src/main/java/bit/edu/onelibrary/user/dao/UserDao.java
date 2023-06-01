@@ -1,4 +1,4 @@
-package bit.edu.onelibrary.community.dao;
+package bit.edu.onelibrary.user.dao;
 
 public class UserDao {
 
