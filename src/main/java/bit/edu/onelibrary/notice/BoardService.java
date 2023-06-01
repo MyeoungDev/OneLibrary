@@ -1,4 +1,5 @@
 package bit.edu.onelibrary.notice;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -19,6 +20,8 @@ import java.util.ArrayList;
                 dao.insert(item);
             } catch (SQLException e){
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -29,6 +32,8 @@ import java.util.ArrayList;
                 item = dao.select(bno);
             } catch (SQLException e){
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
             return item;
@@ -40,6 +45,8 @@ import java.util.ArrayList;
                 list = dao.selectAll();
             } catch (SQLException e){
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
             return list;
@@ -51,6 +58,8 @@ import java.util.ArrayList;
                 flag = dao.update(item);
             } catch (SQLException e){
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
             return flag;
@@ -64,6 +73,8 @@ import java.util.ArrayList;
                 flag = dao.delete(sql);
             } catch (SQLException e){
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
             return flag;
         }
@@ -76,6 +87,8 @@ import java.util.ArrayList;
                 flag = dao.delete(sql);
             } catch (SQLException e){
                 e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
             return flag;

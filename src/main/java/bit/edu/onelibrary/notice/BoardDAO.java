@@ -1,6 +1,9 @@
 package bit.edu.onelibrary.notice;
 
 
+import bit.edu.onelibrary.util.ConnectionManager;
+
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +12,7 @@ import java.util.ArrayList;
 
 public class BoardDAO {
 
-    public boolean insert(BoardDTO item) throws SQLException {
+    public boolean insert(BoardDTO item) throws SQLException, IOException {
         // 하고자하는 일을 하나 처리했다면 커넥션 끊어야함(최소가 되도록)
         boolean flag = false;
         Connection con = ConnectionManager.getConnection();
@@ -25,12 +28,12 @@ public class BoardDAO {
             flag=true;
         }
 
-        ConnectionManager.closeConnection(null, pstmt, con);
+        ConnectionManager.closeConnection(con, pstmt, null);
 
         return flag;
     }
 
-    public BoardDTO select(int bno) throws SQLException {
+    public BoardDTO select(int bno) throws SQLException, IOException {
         BoardDTO item = null;
 
         Connection con = ConnectionManager.getConnection();
@@ -46,12 +49,12 @@ public class BoardDAO {
                     rs.getString(4), rs.getDate(5));
         }
 
-        ConnectionManager.closeConnection(rs, pstmt, con);
+        ConnectionManager.closeConnection(con, pstmt, rs);
 
         return item;
     }
 
-    public boolean delete(String sql) throws SQLException {
+    public boolean delete(String sql) throws SQLException, IOException {
         // 게시글삭제(개별, 전체 모두처리)
         boolean flag = false;
         Connection con = ConnectionManager.getConnection();
@@ -62,11 +65,11 @@ public class BoardDAO {
             flag = true;
         }
 
-        ConnectionManager.closeConnection(null, pstmt, con);
+        ConnectionManager.closeConnection(con, pstmt, null);
         return flag;
     }
 
-    public ArrayList<BoardDTO> selectAll() throws SQLException {
+    public ArrayList<BoardDTO> selectAll() throws SQLException, IOException {
         ArrayList<BoardDTO> list = new ArrayList<>();
 
         Connection con = ConnectionManager.getConnection();
@@ -88,12 +91,12 @@ public class BoardDAO {
             list.add(item);
         }
 
-        ConnectionManager.closeConnection(rs, pstmt, con);
+        ConnectionManager.closeConnection(con, pstmt, rs);
 
         return list;
     }
 
-    public boolean update(BoardDTO item) throws SQLException {
+    public boolean update(BoardDTO item) throws SQLException, IOException {
         boolean flag = false;
         Connection con = ConnectionManager.getConnection();
         String sql = "update Board set title = ?, content = ?, writer = ? where bno = ?";
@@ -106,7 +109,7 @@ public class BoardDAO {
             flag = true;
         }
 
-        ConnectionManager.closeConnection(null, pstmt, con);
+        ConnectionManager.closeConnection(con, pstmt, null);
         return flag;
     }
 }

@@ -2,11 +2,11 @@ package bit.edu.onelibrary.notice;
 
 import java.util.Scanner;
 
-public class CommunityCenter {
+public class NoticeCenter {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		CommunityCenter center = new CommunityCenter();
+		NoticeCenter center = new NoticeCenter();
 		center.openCenter();
 	}
 	BoardService bs =new BoardService();
