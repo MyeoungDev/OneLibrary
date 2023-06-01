@@ -13,8 +13,9 @@ public class UserDao {
 
 
     // 회원가입
-    public void insertUser(String id, String password, String name, String phone, String address, String email) throws IOException, SQLException {
-        //insert 문
+    public boolean insertUser(String id, String password, String name, String phone, String address, String email) throws IOException, SQLException {
+        boolean flag = false;
+        //insert
         Connection con = ConnectionManager.getConnection();
         String sql = "insert int board(user_id, user_password, user_name, user_phone, user_address, user_email) values (?,?,?,?,?,?)";
         PreparedStatement pstmt = con.prepareStatement(sql);
@@ -25,6 +26,12 @@ public class UserDao {
         pstmt.setString(5, address);
         pstmt.setString(6, email);
 
+        int affectedCount = pstmt.executeUpdate();
+        if(affectedCount > 0) {
+            flag = true;
+        }
+        ConnectionManager.closeConnection(con, pstmt, null);
+        return flag;
     }
 
     // 아이디 중복 체크: 같은 아이디인 유저 목록 들고오기

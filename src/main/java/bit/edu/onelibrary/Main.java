@@ -118,9 +118,10 @@ public class Main {
             System.out.println("회원가입을 다시 시도해주세요.");
         } else {
             try {
-                user.register(id, pw, name, phone, address, email);
-                System.out.println("회원가입이 완료되었습니다.");
-                this.displayMainMenu();
+                if(user.register(id, pw, name, phone, address, email)){
+                    System.out.println("회원가입이 완료되었습니다.");
+                    this.displayMainMenu();
+                }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {
