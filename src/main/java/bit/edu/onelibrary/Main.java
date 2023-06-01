@@ -64,7 +64,6 @@ public class Main {
                         case "4" : isClose = true;
                     }
                 }
-                this.displayUserMain();
             }else{
                 System.out.println("사용자로 로그인 되었습니다.");
                 while(!isClose) {
@@ -76,7 +75,6 @@ public class Main {
                         case "2" : isClose = true;
                     }
                 }
-                this.displayUserMain();
             }
         }catch (NullPointerException e){
             System.out.println("비회원 입니다.");
@@ -89,7 +87,6 @@ public class Main {
                     case "2" : isClose = true;
                 }
             }
-            this.openCenter();
         }
     }
 
