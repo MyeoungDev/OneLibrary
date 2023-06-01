@@ -9,15 +9,19 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class UserService {
-    private UserDao dao;
-    public void register(String id, String password, String name, String phone, String address, String email) throws SQLException, IOException {
-        dao.insertUser(id, password, name, phone, address, email);
+    private UserDao dao = new UserDao();
+    public boolean register(String id, String password, String name, String phone, String address, String email) throws SQLException, IOException {
+        boolean flag = false;
+        if(dao.insertUser(id, password, name, phone, address, email)){
+            flag = true;
+        }
+        return flag;
     }
 
-    public boolean isIdDuplicated(String id){
+    public boolean isIdDuplicated(String id) throws SQLException, IOException {
         boolean flag = false;
         if(dao.selectByIdCount(id)){
-
+            flag = true;
         }
 
         return flag;
