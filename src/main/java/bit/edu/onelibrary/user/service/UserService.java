@@ -1,8 +1,10 @@
 package bit.edu.onelibrary.user.service;
 
 import bit.edu.onelibrary.user.dao.UserDao;
+import bit.edu.onelibrary.user.dto.UserAuthenticationDto;
 import bit.edu.onelibrary.user.dto.UserDto;
 
+import bit.edu.onelibrary.util.AuthenticationStorage;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -35,6 +37,12 @@ public class UserService {
 
         if (user != null){
             if (password.equals(user.getPassword())){
+                UserAuthenticationDto userAuthenticationDto =
+                    new UserAuthenticationDto(
+                        user.getNo(),
+                        user.isAdmin()
+                    );
+                AuthenticationStorage.saveAuthentication(userAuthenticationDto);
                 flag = true;
             }
         }
