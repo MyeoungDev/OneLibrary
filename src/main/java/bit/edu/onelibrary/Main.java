@@ -1,5 +1,6 @@
 package bit.edu.onelibrary;
 
+import bit.edu.onelibrary.notice.BoardService;
 import bit.edu.onelibrary.user.service.UserService;
 import bit.edu.onelibrary.notice.NoticeCenter;
 
@@ -46,24 +47,53 @@ public class Main {
 
     // 공지사항 ui 메소드
     public void displayNotice(){
-        System.out.println("-- 공지 --");
+        UserService us = new UserService();
         NoticeCenter notice = new NoticeCenter();
-        boolean isClose = false;
-        System.out.println("--------------공지사항--------------");
-        Scanner scan = new Scanner(System.in);
         String command = "4";
-        while(!isClose) {
-            notice.displayList();
-            notice.displayMainMenu();
-            command = scan.nextLine();
-            switch(command) {
-                case "1" : notice.create(scan); break;
-                case "2" : notice.read(scan); break;
-                case "3" : notice.clear(scan); break;
-                case "4" : isClose = true;
+        boolean isClose = false;
+        try{
+            System.out.println("-- 공지 --");
+            System.out.println("--------------공지사항--------------");
+            Scanner scan = new Scanner(System.in);
+            if(us.isAdmin()==true){
+                System.out.println("관리자로 로그인 되었습니다.");
+                while(!isClose) {
+                    notice.displayList();
+                    notice.displayMainMenu();
+                    command = scan.nextLine();
+                    switch(command) {
+                        case "1" : notice.create(scan); break;
+                        case "2" : notice.read(scan); break;
+                        case "3" : notice.clear(scan); break;
+                        case "4" : isClose = true;
+                    }
+                }
+            }else{
+                System.out.println("사용자로 로그인 되었습니다.");
+                while(!isClose) {
+                    notice.displayList();
+                    notice.userDisplayMainMenu();
+                    command = scan.nextLine();
+                    switch(command) {
+                        case "1" : notice.read(scan); break;
+                        case "2" : isClose = true;
+                    }
+                }
             }
+            this.openCenter();
+        }catch (NullPointerException e){
+            System.out.println("비회원 입니다.");
+            while(!isClose) {
+                notice.displayList();
+                notice.userDisplayMainMenu();
+                command = scan.nextLine();
+                switch(command) {
+                    case "1" : notice.read(scan); break;
+                    case "2" : isClose = true;
+                }
+            }
+            this.openCenter();
         }
-        this.openCenter();
     }
 
     // 로그인 ui 메소드
@@ -72,7 +102,6 @@ public class Main {
         UserService user = new UserService();
         String id;
         String pw;
-
         System.out.print("아이디: ");
         id = scan.nextLine();
         System.out.print("비밀번호: ");

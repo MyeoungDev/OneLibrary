@@ -1,7 +1,6 @@
 package bit.edu.onelibrary.notice;
 
-import bit.edu.onelibrary.Main;
-import bit.edu.onelibrary.user.dto.UserAuthenticationDto;
+import bit.edu.onelibrary.user.service.UserService;
 
 import java.util.Scanner;
 
@@ -9,29 +8,8 @@ public class NoticeCenter {
 
 	public NoticeCenter() {
 	}
-
+	UserService user = new UserService();
 	BoardService bs =new BoardService();
-	public void openNoticeCenter() {
-		boolean isClose = false;
-		System.out.println("--------------공지사항--------------");
-		Scanner scan = new Scanner(System.in);
-		String command = "4";
-		while(!isClose) {
-			this.displayList();
-			this.displayMainMenu();
-			command = scan.nextLine();
-			switch(command) {
-				case "1" : create(scan); break;
-				case "2" : read(scan); break;
-				case "3" : clear(scan); break;
-				case "4" : isClose = true;
-			}
-		}
-		scan.close();
-		Main main = new Main();
-		main.openCenter();
-	}
-	
 
 	public void clear(Scanner scan) {
 		// TODO Auto-generated method stub
@@ -79,7 +57,7 @@ public class NoticeCenter {
 	public void displayList() {
 		bs.readAll();
 		StringBuilder sb = new StringBuilder();
-		System.out.println("------전체 목록------");
+		System.out.println("전체 목록");
 		System.out.println("번호\t제목\t\t\t\t글쓴이\t\t작성일");
 		for(int i = 0 ; i < bs.readAll().size() ; i++){
 			System.out.print(bs.readAll().get(i).getBno()+"\t");
@@ -93,63 +71,83 @@ public class NoticeCenter {
 
 	public void displayDetail(String bno,Scanner scan) {
 		System.out.println(bno+"번 상세 내용");
-		StringBuilder sb = new StringBuilder();
+		UserService us = new UserService();
 		bs.read(Integer.parseInt(bno));
 		System.out.println("제목 : "+bs.read(Integer.parseInt(bno)).getBtitle()+"\t\t");
 		System.out.print("글쓴이 : "+bs.read(Integer.parseInt(bno)).getBwriter()+"\t\t");
 		System.out.println("날짜 : "+bs.read(Integer.parseInt(bno)).getBdate());
 		System.out.println("내용 \n"+bs.read(Integer.parseInt(bno)).getBcontent()+"\t\t");
 		System.out.println();
-		this.displaySubMenu();
-		String command = scan.nextLine();
-		boolean flag = false;
-		if(command.equals("1")) {
-			System.out.println("수정작업");
-			flag = this.displayConfirm(scan);
-			if(flag) {
-				//수정작업
-				BoardDTO modifyB = new BoardDTO();
-				System.out.println("[수정]");
-				System.out.print("제목: ");
-				modifyB.setBtitle(scan.nextLine());
-				System.out.print("내용: ");
-				modifyB.setBcontent(scan.nextLine());
-				System.out.print("글쓴이: ");
-				modifyB.setBwriter(scan.nextLine());
-				System.out.println();
-				modifyB.setBno(Integer.parseInt(bno));
-				bs.modify(modifyB);
-				System.out.println("수정완료");
-			} else {
-				System.out.println("수정취소");
-				this.displayDetail(bno, scan);
-			}
-		} else if(command.equals("2")) {
-			System.out.println("삭제작업");
-			flag = this.displayConfirm(scan);
-			if(flag) {
-				//삭제작업
-				bs.remove(Integer.parseInt(bno));
-				System.out.println("삭제완료");
-			} else {
-				System.out.println("삭제취소");
-				this.displayDetail(bno, scan);
-			}
-		} 
+		try{
+			if(us.isAdmin()==true){
+				this.displaySubMenu();
+				String command = scan.nextLine();
+				boolean flag = false;
+				if(command.equals("1")) {
+					System.out.println("수정작업");
+					flag = this.displayConfirm(scan);
+					if(flag) {
+						//수정작업
+						BoardDTO modifyB = new BoardDTO();
+						System.out.println("[수정]");
+						System.out.print("제목: ");
+						modifyB.setBtitle(scan.nextLine());
+						System.out.print("내용: ");
+						modifyB.setBcontent(scan.nextLine());
+						System.out.print("글쓴이: ");
+						modifyB.setBwriter(scan.nextLine());
+						System.out.println();
+						modifyB.setBno(Integer.parseInt(bno));
+						bs.modify(modifyB);
+						System.out.println("수정완료");
+					} else {
+						System.out.println("수정취소");
+						this.displayDetail(bno, scan);
+					}
+				} else if(command.equals("2")) {
+					System.out.println("삭제작업");
+					flag = this.displayConfirm(scan);
+					if(flag) {
+						//삭제작업
+						bs.remove(Integer.parseInt(bno));
+						System.out.println("삭제완료");
+					} else {
+						System.out.println("삭제취소");
+						this.displayDetail(bno, scan);
+					}
+				}
+			}else {
+				this.userDisplaySubMenu();
+				String command = scan.nextLine();
+				if (command.equals("1")) {
+					//목록으로 돌아가는 로직
+				}
+		}
+		}catch (Exception e) {
+			System.out.println("잘못된 입력입니다.");
+			this.displayDetail(bno, scan);
+		}
 	}
 
 	public void displayMainMenu() {
 		System.out.println();
 		System.out.println("-----------------------------------------------------------------------");
-		System.out.println("메인메뉴: 1.작성 | 2.읽기 | 3.전체삭제 | 4.나가기");
+		System.out.println("메인메뉴: 1.작성 | 2.상세보기 | 3.전체삭제 | 4.나가기");
 		System.out.print("메뉴선택: ");
 		
+	}
+	public void userDisplayMainMenu() {
+		System.out.println();
+		System.out.println("-----------------------------------------------------------------------");
+		System.out.println("메인메뉴: 1.상세보기 | 2.나가기");
+		System.out.print("메뉴선택: ");
+
 	}
 
 	public boolean displayConfirm(Scanner scan) {
 		boolean flag = false;
 		System.out.println("-------------------------------------------------------------------");
-		System.out.println("메뉴: 1.적용 | 2.취소");
+		System.out.println("메뉴: 1.확인 | 2.취소");
 		System.out.print("메뉴선택: ");
 		String command = scan.nextLine();
 		if(command.equals("1")) {
@@ -163,5 +161,9 @@ public class NoticeCenter {
 		System.out.println("메뉴: 1.수정 | 2.삭제 | 3.목록으로 돌아가기");
 		System.out.print("메뉴선택: ");
 	}
-
+	public void userDisplaySubMenu() {
+		System.out.println("-------------------------------------------------------------------");
+		System.out.println("메뉴: 1.목록으로 돌아가기");
+		System.out.print("메뉴선택: ");
+	}
 }
