@@ -1,5 +1,6 @@
 package bit.edu.onelibrary.notice;
 
+import bit.edu.onelibrary.Main;
 import bit.edu.onelibrary.user.dto.UserAuthenticationDto;
 
 import java.util.Scanner;
@@ -10,7 +11,7 @@ public class NoticeCenter {
 	}
 
 	BoardService bs =new BoardService();
-	public void openCenter() {
+	public void openNoticeCenter() {
 		boolean isClose = false;
 		System.out.println("--------------공지사항--------------");
 		Scanner scan = new Scanner(System.in);
@@ -27,11 +28,12 @@ public class NoticeCenter {
 			}
 		}
 		scan.close();
-		System.out.println("\n\n이용해 주셔서 감사합니다.");
+		Main main = new Main();
+		main.openCenter();
 	}
 	
 
-	private void clear(Scanner scan) {
+	public void clear(Scanner scan) {
 		// TODO Auto-generated method stub
 		System.out.println("전체 삭제작업을 시작합니다.");
 		boolean flag = this.displayConfirm(scan);
@@ -44,7 +46,7 @@ public class NoticeCenter {
 		}
 	}
 
-	private void read(Scanner scan) {
+	public void read(Scanner scan) {
 		// TODO Auto-generated method stub
 		System.out.println("[게시물 읽기]");
 		System.out.print("bno: "); 
@@ -52,7 +54,7 @@ public class NoticeCenter {
 		this.displayDetail(command,scan);
 	}
 
-	private void create(Scanner scan) {
+	public void create(Scanner scan) {
 		// TODO Auto-generated method stub
 		BoardDTO board = new BoardDTO();
 		System.out.println("[새 게시물 입력]");
@@ -74,7 +76,7 @@ public class NoticeCenter {
 		
 	}
 
-	private void displayList() {
+	public void displayList() {
 		bs.readAll();
 		StringBuilder sb = new StringBuilder();
 		System.out.println("------전체 목록------");
@@ -88,8 +90,8 @@ public class NoticeCenter {
 		}
 		System.out.println(sb);
 	}
-	
-	private void displayDetail(String bno,Scanner scan) {
+
+	public void displayDetail(String bno,Scanner scan) {
 		System.out.println(bno+"번 상세 내용");
 		StringBuilder sb = new StringBuilder();
 		bs.read(Integer.parseInt(bno));
@@ -135,16 +137,16 @@ public class NoticeCenter {
 			}
 		} 
 	}
-	
-	private void displayMainMenu() {
+
+	public void displayMainMenu() {
 		System.out.println();
 		System.out.println("-----------------------------------------------------------------------");
 		System.out.println("메인메뉴: 1.작성 | 2.읽기 | 3.전체삭제 | 4.나가기");
 		System.out.print("메뉴선택: ");
 		
-	}	
-	
-	private boolean displayConfirm(Scanner scan) {
+	}
+
+	public boolean displayConfirm(Scanner scan) {
 		boolean flag = false;
 		System.out.println("-------------------------------------------------------------------");
 		System.out.println("메뉴: 1.적용 | 2.취소");
@@ -155,8 +157,8 @@ public class NoticeCenter {
 		}
 		return flag;
 	}
-	
-	private void displaySubMenu() {
+
+	public void displaySubMenu() {
 		System.out.println("-------------------------------------------------------------------");
 		System.out.println("메뉴: 1.수정 | 2.삭제 | 3.목록으로 돌아가기");
 		System.out.print("메뉴선택: ");

@@ -48,7 +48,22 @@ public class Main {
     public void displayNotice(){
         System.out.println("-- 공지 --");
         NoticeCenter notice = new NoticeCenter();
-        notice.openCenter();
+        boolean isClose = false;
+        System.out.println("--------------공지사항--------------");
+        Scanner scan = new Scanner(System.in);
+        String command = "4";
+        while(!isClose) {
+            notice.displayList();
+            notice.displayMainMenu();
+            command = scan.nextLine();
+            switch(command) {
+                case "1" : notice.create(scan); break;
+                case "2" : notice.read(scan); break;
+                case "3" : notice.clear(scan); break;
+                case "4" : isClose = true;
+            }
+        }
+        this.openCenter();
     }
 
     // 로그인 ui 메소드
