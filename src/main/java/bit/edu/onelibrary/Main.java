@@ -1,10 +1,13 @@
 package bit.edu.onelibrary;
 
+import bit.edu.onelibrary.user.service.UserService;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
+        UserService user = new UserService();
+        user.login();
     }
 
     // 메인메뉴 ui

@@ -1,5 +1,14 @@
 package bit.edu.onelibrary.user.dao;
 
+import bit.edu.onelibrary.user.dto.UserDto;
+import bit.edu.onelibrary.util.ConnectionManager;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class UserDao {
 
 
@@ -19,20 +28,27 @@ public class UserDao {
 
 
     // 로그인: 같은 아이디인 유저를 찾아서 비밀번호 비교
-    public boolean selectById(){
-        // 입력한 id와 같은 id의 유저 조회
-        boolean flag = false;
+    public UserDto selectById(String userId) throws IOException, SQLException {
+        UserDto user;
 
-        // 아이디가 있으면
-            // 비밀번호를 확인
-                // 맞으면
-                    // 권한확인 :
-                // 아니면
-                    // 틀렸습니다.
-        // 아이디가 없으면
-            // 틀렸습니다.
+        // 커넥션
+        Connection con = ConnectionManager.getConnection();
+        String sql = "SELECT * FROM board.user where user_id= ? ";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, userId);
+        ResultSet rs = pstmt.executeQuery();
 
-        return flag;
+        if(rs.next()){
+            // 일치하는 id 있는 경우 DTO 생성
+            user = new UserDto(rs.getInt(1), rs.getString(2), rs.getString(3),
+                    rs.getString(4), rs.getString(5), rs.getString(6),
+                    rs.getString(7), rs.getBoolean(8));
+        } else {
+            // 일치하는 id 없는 경우 null 반환
+            return null;
+        }
+
+        return user;
     }
 
 
