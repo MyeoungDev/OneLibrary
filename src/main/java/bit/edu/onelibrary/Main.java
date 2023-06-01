@@ -113,7 +113,7 @@ public class Main {
         System.out.println("--------------------");
 
         // id 중복시
-        if(!user.isIdDuplicated(id)) {
+        if(user.isIdDuplicated(id)) {
             System.out.println("이미 존재하는 아이디입니다.");
             System.out.println("회원가입을 다시 시도해주세요.");
         } else {
