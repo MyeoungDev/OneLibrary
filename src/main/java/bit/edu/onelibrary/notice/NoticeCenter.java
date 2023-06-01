@@ -1,15 +1,18 @@
 package bit.edu.onelibrary.notice;
 
+import bit.edu.onelibrary.user.dto.UserAuthenticationDto;
+
 import java.util.Scanner;
 
 public class NoticeCenter {
+
+	BoardService bs =new BoardService();
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		NoticeCenter center = new NoticeCenter();
 		center.openCenter();
 	}
-	BoardService bs =new BoardService();
 	public void openCenter() {
 		boolean isClose = false;
 		System.out.println("--------------공지사항--------------");
