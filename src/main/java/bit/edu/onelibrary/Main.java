@@ -1,6 +1,5 @@
 package bit.edu.onelibrary;
 
-import bit.edu.onelibrary.notice.BoardService;
 import bit.edu.onelibrary.user.service.UserService;
 import bit.edu.onelibrary.notice.NoticeCenter;
 
@@ -77,7 +76,7 @@ public class Main {
                         case "2" : isClose = true;
                     }
                 }
-                this.openCenter();
+                this.displayUserMain();
             }
         }catch (NullPointerException e){
             System.out.println("비회원 입니다.");
