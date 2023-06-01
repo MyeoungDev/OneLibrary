@@ -6,13 +6,10 @@ import java.util.Scanner;
 
 public class NoticeCenter {
 
-	BoardService bs =new BoardService();
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		NoticeCenter center = new NoticeCenter();
-		center.openCenter();
+	public NoticeCenter() {
 	}
+
+	BoardService bs =new BoardService();
 	public void openCenter() {
 		boolean isClose = false;
 		System.out.println("--------------공지사항--------------");
@@ -80,12 +77,12 @@ public class NoticeCenter {
 	private void displayList() {
 		bs.readAll();
 		StringBuilder sb = new StringBuilder();
-		System.out.println("                      전체 목록");
-		System.out.println("번호\t제목\t\t\t\t내용\t\t\t\t글쓴이\t\t\t\t작성일");
+		System.out.println("------전체 목록------");
+		System.out.println("번호\t제목\t\t\t\t글쓴이\t\t작성일");
 		for(int i = 0 ; i < bs.readAll().size() ; i++){
 			System.out.print(bs.readAll().get(i).getBno()+"\t");
 			System.out.print(bs.readAll().get(i).getBtitle()+"\t\t");
-			System.out.print(bs.readAll().get(i).getBcontent()+"\t\t");
+			//System.out.print(bs.readAll().get(i).getBcontent()+"\t\t");
 			System.out.print(bs.readAll().get(i).getBwriter()+"\t\t");
 			System.out.println(bs.readAll().get(i).getBdate());
 		}

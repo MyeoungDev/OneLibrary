@@ -1,6 +1,7 @@
 package bit.edu.onelibrary;
 
 import bit.edu.onelibrary.user.service.UserService;
+import bit.edu.onelibrary.notice.NoticeCenter;
 
 import java.util.Scanner;
 
@@ -25,6 +26,8 @@ public class Main {
     // 공지사항 ui 메소드
     public void displayNotice(){
         System.out.println("-- 공지 --");
+        NoticeCenter notice = new NoticeCenter();
+        notice.openCenter();
     }
 
     // 로그인 ui 메소드
