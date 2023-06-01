@@ -5,6 +5,8 @@ import bit.edu.onelibrary.user.service.UserService;
 import java.util.Scanner;
 
 public class Main {
+
+    Scanner scan = new Scanner(System.in);
     public static void main(String[] args) {
         Main main = new Main();
         main.displayLogin();
@@ -32,7 +34,6 @@ public class Main {
         String id;
         String pw;
 
-        Scanner scan = new Scanner(System.in);
         System.out.print("아이디: ");
         id = scan.nextLine();
         System.out.print("비밀번호: ");
@@ -44,7 +45,6 @@ public class Main {
         } else {
             System.out.println("아이디나 비밀번호가 잘못되었습니다. 다시 시도해주세요.");
         }
-        // 로그인 실패시
 
         // 로그인 성공 시 권한 확인해서 전역변수 변경
         // 커뮤니티 -> user_no도 전역변수 설정해줘야하는지? 명관님한테 물어보자
