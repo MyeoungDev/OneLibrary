@@ -19,7 +19,7 @@ import java.util.Properties;
  **/
 public class ConnectionManager {
 
-    private static final String PROPERTIES_PATH = "src/main/resources/db.properties";
+    private static final String PROPERTIES_PATH = "/Users/parkjungyeong/OneLibrary/src/main/resources/db.properties";
 
     public static Connection getConnection() throws IOException {
 
