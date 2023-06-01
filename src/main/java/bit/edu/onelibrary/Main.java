@@ -3,6 +3,8 @@ package bit.edu.onelibrary;
 import bit.edu.onelibrary.user.service.UserService;
 import bit.edu.onelibrary.notice.NoticeCenter;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
@@ -72,10 +74,44 @@ public class Main {
 
     // 회원가입 ui 메소드
     public void displayRegister(){
-        System.out.println("---회원가입---");
+        UserService user = new UserService();
+        String id;
+        String pw;
+        String name;
+        String phone;
+        String address;
+        String email;
+
+        System.out.println("-------회원가입------");
+        System.out.println("아이디 :");
+        id = scan.nextLine();
+        System.out.println("비밀번호 :");
+        pw = scan.nextLine();
+        System.out.println("이름 : ");
+        name = scan.nextLine();
+        System.out.println("전화번호 : ");
+        phone = scan.nextLine();
+        System.out.println("주소 : ");
+        address = scan.nextLine();
+        System.out.println("이메일 : ");
+        email = scan.nextLine();
+        System.out.println("--------------------");
 
         // id 중복시
-        System.out.println("이미 존재하는 아이디입니다.");
+        if(!user.isIdDuplicated(id)) {
+            System.out.println("이미 존재하는 아이디입니다.");
+            System.out.println("회원가입을 다시 시도해주세요.");
+        } else {
+            try {
+                user.register(id, pw, name, phone, address, email);
+                System.out.println("회원가입이 완료되었습니다.");
+                this.displayMainMenu();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     // 확인, 취소 입력받는 메소드

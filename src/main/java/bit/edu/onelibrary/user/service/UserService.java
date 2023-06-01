@@ -9,13 +9,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class UserService {
-
-    public void register(){
-
+    private UserDao dao;
+    public void register(String id, String password, String name, String phone, String address, String email) throws SQLException, IOException {
+        dao.insertUser(id, password, name, phone, address, email);
     }
 
-    public boolean isIdDuplicated(){
+    public boolean isIdDuplicated(String id){
         boolean flag = false;
+        if(dao.selectByIdCount(id)){
+
+        }
 
         return flag;
 
@@ -38,11 +41,11 @@ public class UserService {
         if (user != null){
             if (password.equals(user.getPassword())){
                 UserAuthenticationDto userAuthenticationDto =
-                    new UserAuthenticationDto(
-                        user.getNo(),
-                        user.getName(),
-                        user.isAdmin()
-                    );
+                        new UserAuthenticationDto(
+                                user.getNo(),
+                                user.getName(),
+                                user.isAdmin()
+                        );
                 AuthenticationStorage.saveAuthentication(userAuthenticationDto);
                 flag = true;
             }
