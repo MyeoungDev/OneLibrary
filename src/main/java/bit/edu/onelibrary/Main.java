@@ -18,6 +18,7 @@ public class Main {
 
     public void openCenter(){
         boolean isClose = false;
+        System.out.println("--------------------------------------");
         System.out.println("\n안녕하세요! 도서관 커뮤니티 센터입니다.");
         Scanner scan = new Scanner(System.in);
         String command;
@@ -84,7 +85,7 @@ public class Main {
                 command = scan.nextLine();
                 switch(command) {
                     case "1" : notice.read(scan); break;
-                    case "2" : isClose = true;
+                    case "2" : isClose = true; break;
                 }
             }
         }
@@ -187,9 +188,9 @@ public class Main {
     // 로그인 후 메인 메뉴 ui
     public void displayUserMain(){
         System.out.println("환영합니다.");
-        System.out.println("--------------------------------------");
         boolean isClose = false;
         while(!isClose) {
+            System.out.println("--------------------------------------");
             System.out.println(" 1.공지사항 \n 2.커뮤니티 \n 3.종료");
             System.out.print("\n * 메뉴선택: ");
             String command = scan.nextLine();
