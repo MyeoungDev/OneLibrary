@@ -25,15 +25,13 @@ public class NoticeCenter {
 	}
 
 	public void read(Scanner scan) {
-		// TODO Auto-generated method stub
 		System.out.println("[게시물 읽기]");
-		System.out.print("bno: "); 
+		System.out.print("게시물 번호 : ");
 		String command = scan.nextLine();
 		this.displayDetail(command,scan);
 	}
 
 	public void create(Scanner scan) {
-		// TODO Auto-generated method stub
 		BoardDTO board = new BoardDTO();
 		System.out.println("[새 게시물 입력]");
 		System.out.print("제목: "); 	
@@ -120,12 +118,15 @@ public class NoticeCenter {
 				this.userDisplaySubMenu();
 				String command = scan.nextLine();
 				if (command.equals("1")) {
-					//목록으로 돌아가는 로직
+					//(대충 목록으로 돌아가는 로직)
 				}
 		}
 		}catch (Exception e) {
-			System.out.println("잘못된 입력입니다.");
-			this.displayDetail(bno, scan);
+			this.userDisplaySubMenu();
+			String command = scan.nextLine();
+			if (command.equals("1")) {
+				//(대충 목록으로 돌아가는 로직)
+			}
 		}
 	}
 
