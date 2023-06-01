@@ -8,14 +8,14 @@ public class User {
     private String userAddress;
     private String userPhone;
     private String userEmail;
-    private int userRole;
+    private boolean isAdmin;
 
     public int getUserNo() {
         return userNo;
     }
 
     public User(int userNo, String userId, String userPassword, String userName,
-                String userAddress, String userPhone, String userEmail, int userRole) {
+                String userAddress, String userPhone, String userEmail, boolean isAdmin) {
         this.userNo = userNo;
         this.userId = userId;
         this.userPassword = userPassword;
@@ -23,6 +23,6 @@ public class User {
         this.userAddress = userAddress;
         this.userPhone = userPhone;
         this.userEmail = userEmail;
-        this.userRole = userRole;
+        this.isAdmin = isAdmin;
     }
 }

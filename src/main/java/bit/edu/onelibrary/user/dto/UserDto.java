@@ -8,9 +8,9 @@ public class UserDto {
     private String address;
     private String phone;
     private String email;
-    private int role;
+    private boolean isAdmin;
 
-    public UserDto(int no, String id, String password, String name, String address, String phone, String email, int role) {
+    public UserDto(int no, String id, String password, String name, String address, String phone, String email, boolean isAdmin) {
         this.no = no;
         this.id = id;
         this.password = password;
@@ -18,7 +18,7 @@ public class UserDto {
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.role = role;
+        this.isAdmin = isAdmin;
     }
 
     public int getNo() {
@@ -49,8 +49,8 @@ public class UserDto {
         return email;
     }
 
-    public int isRole() {
-        return role;
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class UserDto {
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", role=" + role +
+                ", role=" + isAdmin +
                 '}';
     }
 

@@ -1,7 +1,6 @@
 package bit.edu.onelibrary.user.service;
 
 public class UserService {
-    public static int IS_ADMIN = 0;
 
     public void register(){
 
