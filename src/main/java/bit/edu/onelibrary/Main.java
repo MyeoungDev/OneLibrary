@@ -136,7 +136,7 @@ public class Main {
         String address;
         String email;
 
-        System.out.println("========== 회원가입 ==========");
+        System.out.println("\n\n========== 회원가입 ==========");
         System.out.print("아이디 : ");
         id = scan.nextLine();
         System.out.print("비밀번호 : ");
@@ -149,7 +149,7 @@ public class Main {
         address = scan.nextLine();
         System.out.print("이메일 : ");
         email = scan.nextLine();
-        System.out.println("--------------------");
+        System.out.println("===============================");
 
         // id 중복시
         try {
@@ -197,10 +197,13 @@ public class Main {
             System.out.println(" 1.공지사항 \n 2.커뮤니티 \n 3.종료");
             System.out.print("\n * 메뉴선택: ");
             String command = scan.nextLine();
+            System.out.println("--------------------------------------");
             switch(command) {
                 case "1" : displayNotice(); break;
                 case "2" : displayCommunity(); break;
-                case "3" : isClose = true;
+                case "3" : isClose = true; break;
+                default:
+                    System.out.println("잘못된 입력입니다.");
             }
         }
 
