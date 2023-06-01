@@ -8,18 +8,37 @@ import java.util.Scanner;
 public class Main {
 
     Scanner scan = new Scanner(System.in);
+
     public static void main(String[] args) {
         Main main = new Main();
-        main.displayLogin();
+        main.openCenter();
+    }
+
+    public void openCenter(){
+        System.out.println("----도서관----");
+        boolean isClose = false;
+        System.out.println("");
+        System.out.println("안녕하세요! 도서관 커뮤니티 센터입니다.");
+        Scanner scan = new Scanner(System.in);
+        String command;
+        while(!isClose) {
+            this.displayMainMenu();
+            command = scan.nextLine();
+            switch(command) {
+                case "1" : displayNotice(); break;
+                case "2" : displayLogin(); break;
+                case "3" : displayRegister(); break;
+            }
+        }
+        scan.close();
+        System.out.println("\n\n이용해 주셔서 감사합니다.");
     }
 
     // 메인메뉴 ui
     public void displayMainMenu(){
-        System.out.println("----도서관----");
-
-        //1. 공지사항
-        //2. 로그인
-        //3. 회원가입
+        System.out.println("--------------------------------------");
+        System.out.println(" 1.공지사항 \n 2.로그인 \n 3.회원가입 \n");
+        System.out.print(" * 메뉴선택: ");
     }
 
 
@@ -32,7 +51,7 @@ public class Main {
 
     // 로그인 ui 메소드
     public void displayLogin(){
-        System.out.println("-----로그인-----");
+        System.out.println("---*---로그인---*---");
         UserService user = new UserService();
         String id;
         String pw;
@@ -48,9 +67,6 @@ public class Main {
         } else {
             System.out.println("아이디나 비밀번호가 잘못되었습니다. 다시 시도해주세요.");
         }
-
-        // 로그인 성공 시 권한 확인해서 전역변수 변경
-        // 커뮤니티 -> user_no도 전역변수 설정해줘야하는지? 명관님한테 물어보자
     }
 
 
