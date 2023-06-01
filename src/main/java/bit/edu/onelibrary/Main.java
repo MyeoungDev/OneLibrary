@@ -45,21 +45,13 @@ public class Main {
 
     // 공지사항 ui 메소드
     public void displayNotice(){
-<<<<<<< HEAD
         UserService us = new UserService();
         NoticeCenter notice = new NoticeCenter();
-=======
-        NoticeCenter notice = new NoticeCenter();
         boolean isClose = false;
-        System.out.println("\n\n---------------공지사항---------------");
         Scanner scan = new Scanner(System.in);
->>>>>>> e7314581ab46e4e137a6c34d4fe7df92b6fcc93c
         String command = "4";
-        boolean isClose = false;
         try{
-            System.out.println("-- 공지 --");
             System.out.println("--------------공지사항--------------");
-            Scanner scan = new Scanner(System.in);
             if(us.isAdmin()==true){
                 System.out.println("관리자로 로그인 되었습니다.");
                 while(!isClose) {
@@ -73,6 +65,7 @@ public class Main {
                         case "4" : isClose = true;
                     }
                 }
+                this.displayUserMain();
             }else{
                 System.out.println("사용자로 로그인 되었습니다.");
                 while(!isClose) {
@@ -84,8 +77,8 @@ public class Main {
                         case "2" : isClose = true;
                     }
                 }
+                this.openCenter();
             }
-            this.openCenter();
         }catch (NullPointerException e){
             System.out.println("비회원 입니다.");
             while(!isClose) {
@@ -103,17 +96,6 @@ public class Main {
 
     // 로그인 ui 메소드
     public void displayLogin(){
-<<<<<<< HEAD
-        System.out.println("---*---로그인---*---");
-        UserService user = new UserService();
-        String id;
-        String pw;
-        System.out.print("아이디: ");
-        id = scan.nextLine();
-        System.out.print("비밀번호: ");
-        pw = scan.nextLine();
-        boolean isSuccess = user.login(id, pw);
-=======
         while (true){
             System.out.println("\n\n----*----로그인----*----");
             UserService user = new UserService();
@@ -126,8 +108,6 @@ public class Main {
             pw = scan.nextLine();
             System.out.println("\n1.확인  2.메인으로");
             String command = scan.nextLine();
->>>>>>> e7314581ab46e4e137a6c34d4fe7df92b6fcc93c
-
             if (command.equals("2")){
                 displayUserMain();
                 break;
@@ -220,7 +200,9 @@ public class Main {
             switch(command) {
                 case "1" : displayNotice(); break;
                 case "2" : displayCommunity(); break;
-                case "3" : isClose = true;
+                case "3" : isClose = true; break;
+                default:
+                    System.out.println("잘못된 입력입니다.");
             }
         }
 
