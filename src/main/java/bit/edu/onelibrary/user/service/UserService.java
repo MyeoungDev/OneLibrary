@@ -21,7 +21,7 @@ public class UserService {
     public boolean isIdDuplicated(String id) throws SQLException, IOException {
         boolean flag = false;
         if(dao.selectByIdCount(id)){
-
+            flag = true;
         }
 
         return flag;
