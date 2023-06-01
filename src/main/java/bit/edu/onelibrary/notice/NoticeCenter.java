@@ -12,7 +12,7 @@ public class NoticeCenter {
 	BoardService bs =new BoardService();
 	public void openCenter() {
 		boolean isClose = false;
-		System.out.println("---------공지사항---------\n\n");
+		System.out.println("--------------공지사항--------------");
 		Scanner scan = new Scanner(System.in);
 		String command = "4";
 		while(!isClose) {
@@ -76,20 +76,27 @@ public class NoticeCenter {
 
 	private void displayList() {
 		bs.readAll();
+		StringBuilder sb = new StringBuilder();
+		System.out.println("                      전체 목록");
+		System.out.println("번호\t제목\t\t\t\t내용\t\t\t\t글쓴이\t\t\t\t작성일");
 		for(int i = 0 ; i < bs.readAll().size() ; i++){
-			System.out.print(bs.readAll().get(i).getBno()+"  ");
-			System.out.print(bs.readAll().get(i).getBtitle()+"  ");
-			System.out.print(bs.readAll().get(i).getBcontent()+"  ");
-			System.out.print(bs.readAll().get(i).getBwriter()+"  ");
+			System.out.print(bs.readAll().get(i).getBno()+"\t");
+			System.out.print(bs.readAll().get(i).getBtitle()+"\t\t");
+			System.out.print(bs.readAll().get(i).getBcontent()+"\t\t");
+			System.out.print(bs.readAll().get(i).getBwriter()+"\t\t");
 			System.out.println(bs.readAll().get(i).getBdate());
 		}
-		System.out.println(bs.readAll());
-		System.out.println("전체 리스트");
+		System.out.println(sb);
 	}
 	
 	private void displayDetail(String bno,Scanner scan) {
 		System.out.println(bno+"번 상세 내용");
-		
+		StringBuilder sb = new StringBuilder();
+		bs.read(Integer.parseInt(bno));
+		System.out.println("제목 : "+bs.read(Integer.parseInt(bno)).getBtitle()+"\t\t");
+		System.out.print("글쓴이 : "+bs.read(Integer.parseInt(bno)).getBwriter()+"\t\t");
+		System.out.println("날짜 : "+bs.read(Integer.parseInt(bno)).getBdate());
+		System.out.println("내용 \n"+bs.read(Integer.parseInt(bno)).getBcontent()+"\t\t");
 		System.out.println();
 		this.displaySubMenu();
 		String command = scan.nextLine();
@@ -108,6 +115,7 @@ public class NoticeCenter {
 				System.out.print("글쓴이: ");
 				modifyB.setBwriter(scan.nextLine());
 				System.out.println();
+				modifyB.setBno(Integer.parseInt(bno));
 				bs.modify(modifyB);
 				System.out.println("수정완료");
 			} else {
@@ -131,7 +139,7 @@ public class NoticeCenter {
 	private void displayMainMenu() {
 		System.out.println();
 		System.out.println("-----------------------------------------------------------------------");
-		System.out.println("메인메뉴: 1.Create | 2.Read | 3.Clear | 4.Exit");
+		System.out.println("메인메뉴: 1.작성 | 2.읽기 | 3.전체삭제 | 4.나가기");
 		System.out.print("메뉴선택: ");
 		
 	}	
@@ -139,7 +147,7 @@ public class NoticeCenter {
 	private boolean displayConfirm(Scanner scan) {
 		boolean flag = false;
 		System.out.println("-------------------------------------------------------------------");
-		System.out.println("보조메뉴: 1.Ok | 2.Cancel");
+		System.out.println("메뉴: 1.적용 | 2.취소");
 		System.out.print("메뉴선택: ");
 		String command = scan.nextLine();
 		if(command.equals("1")) {
@@ -150,7 +158,7 @@ public class NoticeCenter {
 	
 	private void displaySubMenu() {
 		System.out.println("-------------------------------------------------------------------");
-		System.out.println("보조메뉴: 1.Update | 2.Delete | 3.List");
+		System.out.println("메뉴: 1.수정 | 2.삭제 | 3.목록으로 돌아가기");
 		System.out.print("메뉴선택: ");
 	}
 

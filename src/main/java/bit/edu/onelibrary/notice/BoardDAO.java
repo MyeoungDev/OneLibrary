@@ -17,7 +17,7 @@ public class BoardDAO {
         boolean flag = false;
         Connection con = ConnectionManager.getConnection();
 
-        String sql = "insert into Board(title,content,writer) values(?,?,?) ";
+        String sql = "insert into notice(notice_title,notice_content,notice_user_no) values(?,?,?) ";
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setString(1, item.getBtitle());
         pstmt.setString(2, item.getBcontent());
@@ -37,7 +37,7 @@ public class BoardDAO {
         BoardDTO item = null;
 
         Connection con = ConnectionManager.getConnection();
-        String sql = "select * from Board where bno = ? ";
+        String sql = "select * from notice where notice_no = ? ";
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setInt(1, bno);
         ResultSet rs = pstmt.executeQuery();
@@ -73,7 +73,7 @@ public class BoardDAO {
         ArrayList<BoardDTO> list = new ArrayList<>();
 
         Connection con = ConnectionManager.getConnection();
-        String sql = "select * from Board ";
+        String sql = "select * from notice ";
         PreparedStatement pstmt = con.prepareStatement(sql); // statement 상속하므로 써도 문제없음
         // prepared statement를 사용하는 세가지 이유
         // 1. 데이터 1000개라도 반복하지 않고 한번만 써주면됨(?)
@@ -99,11 +99,12 @@ public class BoardDAO {
     public boolean update(BoardDTO item) throws SQLException, IOException {
         boolean flag = false;
         Connection con = ConnectionManager.getConnection();
-        String sql = "update Board set title = ?, content = ?, writer = ? where bno = ?";
+        String sql = "update notice set notice_title = ?, notice_content = ?, notice_user_no = ? where notice_no = ?";
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setString(1, item.getBtitle());
         pstmt.setString(2, item.getBcontent());
         pstmt.setString(3, item.getBwriter());
+        pstmt.setInt(4, item.getBno());
         int affectedCount = pstmt.executeUpdate();
         if(affectedCount>0){
             flag = true;

@@ -68,7 +68,7 @@ import java.util.ArrayList;
         public boolean remove(int bno){
             // 게시글 id를 받아서 지우기
             boolean flag = false;
-            String sql = "delete from posts where bno="+bno;
+            String sql = "delete from notice where notice_no="+bno;
             try {
                 flag = dao.delete(sql);
             } catch (SQLException e){
@@ -82,9 +82,10 @@ import java.util.ArrayList;
         public boolean removeAll(){
             // 게시글 모두 지우기
             boolean flag = false;
-            String sql = "delete from Board";
+            String sql = "delete from notice;";
             try {
                 flag = dao.delete(sql);
+                dao.delete("ALTER TABLE notice AUTO_INCREMENT = 1;");
             } catch (SQLException e){
                 e.printStackTrace();
             } catch (IOException e) {
