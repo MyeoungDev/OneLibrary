@@ -8,10 +8,12 @@ package bit.edu.onelibrary.user.dto;
  **/
 public class UserAuthenticationDto {
     private long userNo;
+    private String userName;
     private boolean isAdmin;
 
-    public UserAuthenticationDto(long userNo, boolean isAdmin) {
+    public UserAuthenticationDto(long userNo, String userName, boolean isAdmin) {
         this.userNo = userNo;
+        this.userName = userName;
         this.isAdmin = isAdmin;
     }
 
