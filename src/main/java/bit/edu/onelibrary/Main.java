@@ -113,20 +113,26 @@ public class Main {
         System.out.println("--------------------");
 
         // id 중복시
-        if(user.isIdDuplicated(id)) {
-            System.out.println("이미 존재하는 아이디입니다.");
-            System.out.println("회원가입을 다시 시도해주세요.");
-        } else {
-            try {
-                if(user.register(id, pw, name, phone, address, email)){
-                    System.out.println("회원가입이 완료되었습니다.");
-                    this.displayMainMenu();
+        try {
+            if(user.isIdDuplicated(id)) {
+                System.out.println("이미 존재하는 아이디입니다.");
+                System.out.println("회원가입을 다시 시도해주세요.");
+            } else {
+                try {
+                    if(user.register(id, pw, name, phone, address, email)){
+                        System.out.println("회원가입이 완료되었습니다.");
+                        this.displayMainMenu();
+                    }
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

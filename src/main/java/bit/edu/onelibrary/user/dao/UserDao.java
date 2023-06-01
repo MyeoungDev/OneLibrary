@@ -35,9 +35,20 @@ public class UserDao {
     }
 
     // 아이디 중복 체크: 같은 아이디인 유저 목록 들고오기
-    public boolean selectByIdCount(String id){
+    public boolean selectByIdCount(String id) throws IOException, SQLException {
         boolean flag = false;
+        //select
+        Connection con = ConnectionManager.getConnection();
+        String sql = "select count(user_id) from user where user_id = ?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, id);
+        ResultSet rs = pstmt.executeQuery();
 
+        if(rs.next()){
+            if(rs.getInt(1)>0){
+                flag = true;
+            }
+        }
         return flag;
     }
 
