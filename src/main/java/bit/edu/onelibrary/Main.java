@@ -98,17 +98,17 @@ public class Main {
         String email;
 
         System.out.println("-------회원가입------");
-        System.out.println("아이디 :");
+        System.out.print("아이디 : ");
         id = scan.nextLine();
-        System.out.println("비밀번호 :");
+        System.out.print("비밀번호 : ");
         pw = scan.nextLine();
-        System.out.println("이름 : ");
+        System.out.print("이름 : ");
         name = scan.nextLine();
-        System.out.println("전화번호 : ");
+        System.out.print("전화번호 : ");
         phone = scan.nextLine();
-        System.out.println("주소 : ");
+        System.out.print("주소 : ");
         address = scan.nextLine();
-        System.out.println("이메일 : ");
+        System.out.print("이메일 : ");
         email = scan.nextLine();
         System.out.println("--------------------");
 
