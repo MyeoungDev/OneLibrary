@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        UserService user = new UserService();
-        user.login();
+        Main main = new Main();
+        main.displayLogin();
     }
 
     // 메인메뉴 ui
@@ -27,10 +27,24 @@ public class Main {
 
     // 로그인 ui 메소드
     public void displayLogin(){
-        System.out.println("---로그인---");
+        System.out.println("-----로그인-----");
+        UserService user = new UserService();
+        String id;
+        String pw;
 
+        Scanner scan = new Scanner(System.in);
+        System.out.print("아이디: ");
+        id = scan.nextLine();
+        System.out.print("비밀번호: ");
+        pw = scan.nextLine();
+        boolean isSuccess = user.login(id, pw);
+
+        if (isSuccess){
+            System.out.println("로그인 성공");
+        } else {
+            System.out.println("아이디나 비밀번호가 잘못되었습니다. 다시 시도해주세요.");
+        }
         // 로그인 실패시
-        System.out.println("잘못됨");
 
         // 로그인 성공 시 권한 확인해서 전역변수 변경
         // 커뮤니티 -> user_no도 전역변수 설정해줘야하는지? 명관님한테 물어보자

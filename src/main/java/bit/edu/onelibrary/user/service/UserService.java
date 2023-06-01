@@ -20,29 +20,25 @@ public class UserService {
     }
 
     // 로그인
-    public boolean login(){
+    public boolean login(String id, String password){
+        // 로그인 성공 여부
         boolean flag = false;
+
         UserDto user = null;
+
         try {
             UserDao dao = new UserDao();
-            user = dao.selectById("wnddusssd");
+            user = dao.selectById(id);
         } catch (IOException | SQLException e){
             e.printStackTrace();
         }
 
         if (user != null){
-            System.out.println("있음");
-        } else{
-            System.out.println("없음");
+            if (password.equals(user.getPassword())){
+                flag = true;
+            }
         }
-        // 아이디가 있으면
-            // 비밀번호를 확인
-                // 맞으면
-                    // 권한확인 :
-                // 아니면
-                    // 틀렸습니다.
-        // 아이디가 없으면
-            // 틀렸습니다.
+
         return flag;
     }
 
