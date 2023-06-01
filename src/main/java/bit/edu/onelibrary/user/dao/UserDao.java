@@ -17,7 +17,7 @@ public class UserDao {
         boolean flag = false;
         //insert
         Connection con = ConnectionManager.getConnection();
-        String sql = "insert int board(user_id, user_password, user_name, user_phone, user_address, user_email) values (?,?,?,?,?,?)";
+        String sql = "insert user(user_id, user_password, user_name, user_phone, user_address, user_email, is_admin) values (?,?,?,?,?,?,0)";
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setString(1, id);
         pstmt.setString(2, password);
