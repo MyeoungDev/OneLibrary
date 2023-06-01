@@ -5,10 +5,13 @@ import bit.edu.onelibrary.community.dto.CommunityDto;
 import bit.edu.onelibrary.community.dto.CommunityModifyDTO;
 import bit.edu.onelibrary.community.dto.CommunityRequest;
 import bit.edu.onelibrary.community.service.CommunityService;
+import bit.edu.onelibrary.util.AuthenticationStorage;
 
 import java.io.IOException;
+import java.io.ObjectInput;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Some description here.
@@ -46,13 +49,23 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public void updateCommunity(CommunityModifyDTO communityModifyDTO) throws SQLException, IOException {
-        communityDao.updateCommunity(communityModifyDTO);
+        if(Objects.equals(communityModifyDTO.getUserNo(),AuthenticationStorage.getAuthentication().getUserNo())) {
+            communityDao.updateCommunity(communityModifyDTO);
+        }
+        else {
+            System.out.println("본인이 작성한 독후감만 수정할 수 있습니다.");
+        }
 
     }
 
     @Override
     public void deleteCommunity(long communityNo) throws SQLException, IOException {
-        communityDao.deleteCommunity(communityNo);
+        if(Objects.equals(communityNo,AuthenticationStorage.getAuthentication().getUserNo())) {
+            communityDao.deleteCommunity(communityNo);
+        }
+        else {
+            System.out.println("본인이 작성한 독후감만 삭제할 수 있습니다.");
+        }
     }
 
     // 수정 로직
