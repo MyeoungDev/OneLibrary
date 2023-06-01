@@ -2,14 +2,12 @@ package bit.edu.onelibrary.notice;
 
 import bit.edu.onelibrary.user.service.UserService;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class NoticeCenter {
 
-	public NoticeCenter() {
-	}
-	UserService user = new UserService();
-	BoardService bs =new BoardService();
+	BoardService boardService = new BoardService();
 
 	public void clear(Scanner scan) {
 		// TODO Auto-generated method stub
@@ -17,7 +15,7 @@ public class NoticeCenter {
 		boolean flag = this.displayConfirm(scan);
 		if(flag) {
 			//삭제작업
-			bs.removeAll();
+			boardService.removeAll();
 			System.out.println("전체 삭제작업을 완료했습니다.");
 		} else {
 			System.out.println("전체 삭제작업을 취소했습니다.");
@@ -44,7 +42,7 @@ public class NoticeCenter {
 		boolean flag = this.displayConfirm(scan);
 		if(flag) {
 			//삽입작업
-			bs.register(board);
+			boardService.register(board);
 			System.out.println("삽입완료");
 		} else {
 			System.out.println("삽입취소");
@@ -53,31 +51,32 @@ public class NoticeCenter {
 	}
 
 	public void displayList() {
-		bs.readAll();
+		ArrayList<BoardDTO> boardDTOS = boardService.readAll();
 		StringBuilder sb = new StringBuilder();
 		System.out.println("전체 목록");
 		System.out.println("번호\t제목\t\t\t\t글쓴이\t\t작성일");
-		for(int i = 0 ; i < bs.readAll().size() ; i++){
-			System.out.print(bs.readAll().get(i).getBno()+"\t");
-			System.out.print(bs.readAll().get(i).getBtitle()+"\t\t");
+		for(int i = 0; i < boardDTOS.size() ; i++){
+			System.out.print(boardDTOS.get(i).getBno()+"\t");
+			System.out.print(boardDTOS.get(i).getBtitle()+"\t\t");
 			//System.out.print(bs.readAll().get(i).getBcontent()+"\t\t");
-			System.out.print(bs.readAll().get(i).getBwriter()+"\t\t");
-			System.out.println(bs.readAll().get(i).getBdate());
+			System.out.print(boardDTOS.get(i).getBwriter()+"\t\t");
+			System.out.println(boardDTOS.get(i).getBdate());
 		}
 		System.out.println(sb);
 	}
 
 	public void displayDetail(String bno,Scanner scan) {
 		System.out.println(bno+"번 상세 내용");
-		UserService us = new UserService();
-		bs.read(Integer.parseInt(bno));
-		System.out.println("제목 : "+bs.read(Integer.parseInt(bno)).getBtitle()+"\t\t");
-		System.out.print("글쓴이 : "+bs.read(Integer.parseInt(bno)).getBwriter()+"\t\t");
-		System.out.println("날짜 : "+bs.read(Integer.parseInt(bno)).getBdate());
-		System.out.println("내용 \n"+bs.read(Integer.parseInt(bno)).getBcontent()+"\t\t");
+		UserService userService = new UserService();
+		BoardDTO read = boardService.read(Integer.parseInt(bno));
+		System.out.println("제목 : "+ read.getBtitle()+"\t\t");
+		System.out.print("글쓴이 : "+ read.getBwriter()+"\t\t");
+		System.out.println("날짜 : "+ read.getBdate());
+		System.out.println("내용 \n"+ read.getBcontent()+"\t\t");
 		System.out.println();
 		try{
-			if(us.isAdmin()==true){
+
+			if(userService.isAdmin()){
 				this.displaySubMenu();
 				String command = scan.nextLine();
 				boolean flag = false;
@@ -96,7 +95,7 @@ public class NoticeCenter {
 						modifyB.setBwriter(scan.nextLine());
 						System.out.println();
 						modifyB.setBno(Integer.parseInt(bno));
-						bs.modify(modifyB);
+						boardService.modify(modifyB);
 						System.out.println("수정완료");
 					} else {
 						System.out.println("수정취소");
@@ -107,7 +106,7 @@ public class NoticeCenter {
 					flag = this.displayConfirm(scan);
 					if(flag) {
 						//삭제작업
-						bs.remove(Integer.parseInt(bno));
+						boardService.remove(Integer.parseInt(bno));
 						System.out.println("삭제완료");
 					} else {
 						System.out.println("삭제취소");

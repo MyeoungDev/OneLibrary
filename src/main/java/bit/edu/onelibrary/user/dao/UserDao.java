@@ -49,6 +49,8 @@ public class UserDao {
                 flag = true;
             }
         }
+
+        ConnectionManager.closeConnection(con, pstmt, rs);
         return flag;
     }
 
