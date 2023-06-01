@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
  * @author : 강명관
  * @since : 1.0
  **/
-public class Community {
+public class Community {  //DB테이블 그 자체. DB의 모든 컬럼을 속성으로 가지고 있어야함.
 
     private long communityNo;
     private long userNo;
