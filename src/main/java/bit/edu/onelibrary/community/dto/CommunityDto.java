@@ -39,6 +39,14 @@ public class CommunityDto {
         this.communityContent = communityContent;
     }
 
+    public long getCommunityNo() {
+        return communityNo;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
     public long getUserNo(){
         return userNo;
     }

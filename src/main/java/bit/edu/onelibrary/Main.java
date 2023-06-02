@@ -8,6 +8,7 @@ import bit.edu.onelibrary.community.dto.MyCommunity;
 import bit.edu.onelibrary.community.service.CommunityService;
 import bit.edu.onelibrary.community.service.impl.CommunityServiceImpl;
 import bit.edu.onelibrary.user.dao.UserDao;
+import bit.edu.onelibrary.user.dto.UserAuthenticationDto;
 import bit.edu.onelibrary.user.service.UserService;
 import bit.edu.onelibrary.notice.NoticeCenter;
 import bit.edu.onelibrary.util.AuthenticationStorage;
@@ -335,9 +336,37 @@ public class Main {
             System.out.println("다시 입력해주세요.");
 //            displayMyCommunity();
         }else {// 커뮤니티 상세
-            System.out.println("제목 : "+ allCommunities.get(command - 1).getTitle());
-            System.out.println("내용 : "+ allCommunities.get(command - 1).getCommunityContent());
-            System.out.println("작성시간 : "+ allCommunities.get(command - 1).getCreateAt());
+            CommunityDto selectedCommunity = allCommunities.get(command - 1);
+            System.out.println("제목 : "+ selectedCommunity.getTitle());
+            System.out.println("내용 : "+ selectedCommunity.getCommunityContent());
+            System.out.println("작성시간 : "+ selectedCommunity.getCreateAt());
+
+            UserAuthenticationDto authentication = AuthenticationStorage.getAuthentication();
+
+            if (authentication.getUserNo() == selectedCommunity.getUserNo() ||
+                authentication.isAdmin()) {
+
+                System.out.println("1. 수정");
+                System.out.println("2. 삭제");
+                System.out.println("0. 목록으로");
+
+                int menuCommand = scan.nextInt();
+
+                switch (menuCommand){
+                    case 1 :
+                        displayUpdateCommunity(selectedCommunity.getCommunityNo());
+                        break;
+                    case 2 :
+                        displayDeleteCommunity(selectedCommunity.getCommunityNo());
+                        break;
+                    case 0:
+                        displayCommunityCenter();
+                        break;
+                }
+
+            }
+
+
         }
 
 //        displayCommunityCenter();
