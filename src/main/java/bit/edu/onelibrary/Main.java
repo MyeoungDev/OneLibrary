@@ -39,7 +39,7 @@ public class Main {
 
     public void openCenter() throws SQLException, IOException {
         boolean isClose = false;
-        System.out.println("------------------------------------------------");
+        System.out.println("\n\n------------------------------------------------");
         System.out.println("안녕하세요! 도서관 커뮤니티 센터입니다.");
         Scanner scan = new Scanner(System.in);
         String command;
@@ -80,8 +80,8 @@ public class Main {
     // 공지사항 ui 메소드
     public void displayNotice() {
         UserService userService = new UserService();
+        System.out.println("\n\n=================== 공지사항 ====================");
         try {
-            System.out.println("\n\n================ 공지사항 ================");
             this.displayAuth(userService.isAdmin());
         } catch (NullPointerException e) {
             System.out.println("* 비회원으로 이용중입니다.");
@@ -95,7 +95,8 @@ public class Main {
         boolean isClose = false;
         String command = "4";
         if (auth) {
-            System.out.println("관리자로 로그인 되었습니다.");
+            System.out.println("관리자로 이용중입니다.");
+            System.out.println("------------------------------------------------");
             while (!isClose) {
                 notice.displayList();
                 notice.displayMainMenu();
@@ -180,7 +181,7 @@ public class Main {
         String address;
         String email;
 
-        System.out.println("\n\n========== 회원가입 ==========");
+        System.out.println("\n\n============= 회원가입 =============");
         System.out.print("아이디 : ");
         id = scan.nextLine();
         System.out.print("비밀번호 : ");
@@ -207,7 +208,7 @@ public class Main {
         address = scan.nextLine();
         System.out.print("이메일 : ");
         email = scan.nextLine();
-        System.out.println("===============================");
+        System.out.println("===================================");
 
         // id 중복시
         try {
@@ -216,7 +217,7 @@ public class Main {
                 System.out.println("회원가입을 다시 시도해주세요.");
                 this.displayRegister();
             } else {
-                System.out.println("회원가입이 완료되었습니다.");
+                System.out.println("회원가입이 완료되었습니다.\n");
                 user.register(id, pw, name, phone, address, email);
             }
         } catch (SQLException e) {
@@ -242,19 +243,19 @@ public class Main {
     // 로그인 후 메인 메뉴 ui
     public void displayUserMain() throws SQLException, IOException {
         UserService service = new UserService();
-        System.out.println("\n--------------------------------------");
+        System.out.println("\n------------------------------------------------");
         System.out.println("환영합니다.");
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         boolean isClose = false;
         while (!isClose) {
-            System.out.println("--------------------------------------");
+            System.out.println("------------------------------------------------");
             System.out.println(" 1.공지사항 \n 2.커뮤니티 \n 3.로그아웃 \n 4.종료");
+            System.out.println("------------------------------------------------");
             System.out.print("\n * 메뉴선택: ");
             String command = br.readLine();
 //            String command = scan.nextLine();
-            System.out.println("--------------------------------------");
             switch (command) {
                 case "1":
                     displayNotice();
