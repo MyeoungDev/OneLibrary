@@ -217,6 +217,7 @@ public class Main {
                 this.displayRegister();
             } else {
                 System.out.println("회원가입이 완료되었습니다.");
+                user.register(id, pw, name, phone, address, email);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
