@@ -76,10 +76,10 @@ public class NoticeCenter {
 			System.out.println("-------------\n존재하지 않는 글입니다.\n-------------");
 			return;
 		}
-		sb.append("제목 : "+ read.getBtitle()+"\n");
-		sb.append("글쓴이 : "+ read.getBwriter()+"\n");
-		sb.append("날짜 : "+ read.getBdate()+"\n");
-		sb.append("내용 \n"+ read.getBcontent()+"\n");
+		sb.append(" - 제목 : "+ read.getBtitle()+"\n");
+		sb.append(" - 글쓴이 : "+ read.getBwriter()+"\n");
+		sb.append(" - 날짜 : "+ read.getBdate()+"\n");
+		sb.append("[ 내용 ] \n"+ read.getBcontent()+"\n");
 		System.out.print(sb);
 		try{
 			if(userService.isAdmin()){
