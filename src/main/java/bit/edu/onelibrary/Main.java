@@ -312,7 +312,7 @@ public class Main {
 
         List<CommunityDto> allCommunities = communityService.getAllCommunities();
         for (int i = 0; i < allCommunities.size(); i++) {
-            System.out.println(i + ". " + allCommunities.get(i).getTitle());
+            System.out.println(i +1 + ". " + allCommunities.get(i).getTitle());
         }
 
         System.out.println("0. 이전 페이지로");
@@ -327,9 +327,9 @@ public class Main {
             System.out.println("다시 입력해주세요.");
 //            displayMyCommunity();
         }else {// 커뮤니티 상세
-            System.out.println("제목 : "+ allCommunities.get(command).getTitle());
-            System.out.println("내용 : "+ allCommunities.get(command).getCommunityContent());
-            System.out.println("작성시간 : "+ allCommunities.get(command).getCreateAt());
+            System.out.println("제목 : "+ allCommunities.get(command - 1).getTitle());
+            System.out.println("내용 : "+ allCommunities.get(command - 1).getCommunityContent());
+            System.out.println("작성시간 : "+ allCommunities.get(command - 1).getCreateAt());
         }
 
 //        displayCommunityCenter();
