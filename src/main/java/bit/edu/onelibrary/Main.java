@@ -5,14 +5,12 @@ import bit.edu.onelibrary.community.dto.CommunityModifyDTO;
 import bit.edu.onelibrary.community.dto.CommunityRequest;
 import bit.edu.onelibrary.community.dto.MyCommunity;
 import bit.edu.onelibrary.community.service.CommunityService;
-import bit.edu.onelibrary.user.dto.UserDto;
 import bit.edu.onelibrary.user.service.UserService;
 import bit.edu.onelibrary.notice.NoticeCenter;
 import bit.edu.onelibrary.util.AuthenticationStorage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -249,7 +247,7 @@ public class Main {
                     displayNotice();
                     break;
                 case "2":
-                    displayCommunity();
+                    displayCommunityCenter();
                     break;
                 case "3":
                     isClose = true;
