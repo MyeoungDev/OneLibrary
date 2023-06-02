@@ -68,7 +68,7 @@ public class NoticeCenter {
 	}
 
 	public void displayDetail(String bno,Scanner scan) {
-		System.out.println("[ \n"+bno+"번 상세 내용 ]");
+		System.out.println("\n[ "+bno+"번 글입니다.]");
 		UserService userService = new UserService();
 		StringBuilder sb = new StringBuilder();
 		BoardDTO read = boardService.read(Integer.parseInt(bno));
@@ -79,7 +79,7 @@ public class NoticeCenter {
 		sb.append(" - 제목 : "+ read.getBtitle()+"\n");
 		sb.append(" - 글쓴이 : "+ read.getBwriter()+"\n");
 		sb.append(" - 날짜 : "+ read.getBdate()+"\n");
-		sb.append("[ 내용 ] \n"+ read.getBcontent()+"\n");
+		sb.append("\n[ 내용 ] \n"+ read.getBcontent()+"\n\n");
 		System.out.print(sb);
 		try{
 			if(userService.isAdmin()){
