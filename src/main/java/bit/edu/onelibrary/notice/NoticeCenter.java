@@ -1,8 +1,11 @@
 package bit.edu.onelibrary.notice;
 
+import bit.edu.onelibrary.notice.dto.BoardDTO;
+import bit.edu.onelibrary.notice.service.BoardService;
 import bit.edu.onelibrary.user.service.UserService;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class NoticeCenter {
@@ -54,13 +57,12 @@ public class NoticeCenter {
 		ArrayList<BoardDTO> boardDTOS = boardService.readAll();
 		StringBuilder sb = new StringBuilder();
 		System.out.println("전체 목록");
-		System.out.println("번호\t제목\t\t\t\t글쓴이\t\t작성일");
+		System.out.println("번호\t제목\t\t\t\t글쓴이\t\t\t작성일");
 		for(int i = 0; i < boardDTOS.size() ; i++){
-			System.out.print(boardDTOS.get(i).getBno()+"\t");
-			System.out.print(boardDTOS.get(i).getBtitle()+"\t\t");
-			//System.out.print(bs.readAll().get(i).getBcontent()+"\t\t");
-			System.out.print(boardDTOS.get(i).getBwriter()+"\t\t");
-			System.out.println(boardDTOS.get(i).getBdate());
+			sb.append(boardDTOS.get(i).getBno()+"\t");
+			sb.append(boardDTOS.get(i).getBtitle()+"\t\t");
+			sb.append(boardDTOS.get(i).getBwriter()+"\t\t");
+			sb.append(boardDTOS.get(i).getBdate());
 		}
 		System.out.println(sb);
 	}
@@ -68,14 +70,18 @@ public class NoticeCenter {
 	public void displayDetail(String bno,Scanner scan) {
 		System.out.println(bno+"번 상세 내용");
 		UserService userService = new UserService();
+		StringBuilder sb = new StringBuilder();
 		BoardDTO read = boardService.read(Integer.parseInt(bno));
+		if (Objects.isNull(read)) {
+			System.out.println("존재하지 않는 글입니다.");
+			return;
+		}
 		System.out.println("제목 : "+ read.getBtitle()+"\t\t");
 		System.out.print("글쓴이 : "+ read.getBwriter()+"\t\t");
 		System.out.println("날짜 : "+ read.getBdate());
 		System.out.println("내용 \n"+ read.getBcontent()+"\t\t");
 		System.out.println();
 		try{
-
 			if(userService.isAdmin()){
 				this.displaySubMenu();
 				String command = scan.nextLine();
@@ -117,14 +123,12 @@ public class NoticeCenter {
 				this.userDisplaySubMenu();
 				String command = scan.nextLine();
 				if (command.equals("1")) {
-					//(대충 목록으로 돌아가는 로직)
 				}
 		}
 		}catch (Exception e) {
 			this.userDisplaySubMenu();
 			String command = scan.nextLine();
 			if (command.equals("1")) {
-				//(대충 목록으로 돌아가는 로직)
 			}
 		}
 	}

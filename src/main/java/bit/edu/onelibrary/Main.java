@@ -44,41 +44,36 @@ public class Main {
 
 
     // 공지사항 ui 메소드
-    public void displayNotice(){
-        UserService us = new UserService();
+    public void displayNotice() {
+        UserService userService = new UserService();
+        try {
+            System.out.println("--------------공지사항--------------");
+            this.displayAuth(userService.isAdmin());
+        } catch (NullPointerException e) {
+            System.out.println("비회원 입니다.");
+            this.displayAuth(false);
+        }
+    }
+
+    public void displayAuth(boolean auth){
         NoticeCenter notice = new NoticeCenter();
         boolean isClose = false;
-        Scanner scan = new Scanner(System.in);
         String command = "4";
-        try{
-            System.out.println("--------------공지사항--------------");
-            if(us.isAdmin()==true){
-                System.out.println("관리자로 로그인 되었습니다.");
-                while(!isClose) {
-                    notice.displayList();
-                    notice.displayMainMenu();
-                    command = scan.nextLine();
-                    switch(command) {
-                        case "1" : notice.create(scan); break;
-                        case "2" : notice.read(scan); break;
-                        case "3" : notice.clear(scan); break;
-                        case "4" : isClose = true;
-                    }
-                }
-            }else{
-                System.out.println("사용자로 로그인 되었습니다.");
-                while(!isClose) {
-                    notice.displayList();
-                    notice.userDisplayMainMenu();
-                    command = scan.nextLine();
-                    switch(command) {
-                        case "1" : notice.read(scan); break;
-                        case "2" : isClose = true;
-                    }
+        if(auth){
+            System.out.println("관리자로 로그인 되었습니다.");
+            while(!isClose) {
+                notice.displayList();
+                notice.displayMainMenu();
+                command = scan.nextLine();
+                switch(command) {
+                    case "1" : notice.create(scan); break;
+                    case "2" : notice.read(scan); break;
+                    case "3" : notice.clear(scan); break;
+                    case "4" : isClose = true;
                 }
             }
-        }catch (NullPointerException e){
-            System.out.println("비회원 입니다.");
+        }
+        else {
             while(!isClose) {
                 notice.displayList();
                 notice.userDisplayMainMenu();
@@ -205,7 +200,6 @@ public class Main {
         }
 
     }
-
     public void displayCommunity(){
         System.out.println("\n\n========== 커뮤니티 ==========\n");
     }
