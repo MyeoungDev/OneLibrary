@@ -73,14 +73,14 @@ public class NoticeCenter {
 		StringBuilder sb = new StringBuilder();
 		BoardDTO read = boardService.read(Integer.parseInt(bno));
 		if (Objects.isNull(read)) {
-			System.out.println("존재하지 않는 글입니다.");
+			System.out.println("----------------------\n존재하지 않는 글입니다.\n----------------------");
 			return;
 		}
-		System.out.println("제목 : "+ read.getBtitle()+"\t\t");
-		System.out.print("글쓴이 : "+ read.getBwriter()+"\t\t");
-		System.out.println("날짜 : "+ read.getBdate());
-		System.out.println("내용 \n"+ read.getBcontent()+"\t\t");
-		System.out.println();
+		sb.append("제목 : "+ read.getBtitle()+"\t\t");
+		sb.append("글쓴이 : "+ read.getBwriter()+"\t\t");
+		sb.append("날짜 : "+ read.getBdate());
+		sb.append("내용 \n"+ read.getBcontent()+"\n");
+		System.out.print(sb);
 		try{
 			if(userService.isAdmin()){
 				this.displaySubMenu();
