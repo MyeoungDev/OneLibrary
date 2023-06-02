@@ -25,18 +25,14 @@ import java.util.Scanner;
 public class CommunityServiceImpl implements CommunityService {
 
     private final CommunityDao communityDao;
-    private final UserDao userDao;
 
-    public CommunityServiceImpl(CommunityDao communityDao, UserDao userDao) {
+    public CommunityServiceImpl(CommunityDao communityDao) {
         this.communityDao = communityDao;
-        this.userDao = userDao;
     }
 
     @Override
     public void createCommunity(CommunityRequest request) throws SQLException, IOException {
-//        String userName = userDao.findUserNameByUserNo(long userNo);
-//        request.setUserName(userName);
-//        communityDao.insertCommunity(request);
+        communityDao.insertCommunity(request);
     }
 
     @Override

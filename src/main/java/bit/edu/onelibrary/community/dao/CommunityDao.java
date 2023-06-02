@@ -26,12 +26,12 @@ public class CommunityDao {
 
     public void insertCommunity(CommunityRequest request) throws IOException, SQLException {
         Connection connection = ConnectionManager.getConnection();
-        String sql = "insert into community value(?,?,?,now())";
+        String sql = "insert into community(user_no, community_title, community_content) value(?,?,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-        preparedStatement.setString(1, request.getCommunityTitle());
-        preparedStatement.setString(2, request.getCommunityContent());
-        preparedStatement.setString(3, request.getUserName());
+        preparedStatement.setLong(1, request.getUserNo());
+        preparedStatement.setString(2, request.getCommunityTitle());
+        preparedStatement.setString(3, request.getCommunityContent());
         preparedStatement.executeUpdate();
 
         ConnectionManager.closeConnection(connection, preparedStatement, null);

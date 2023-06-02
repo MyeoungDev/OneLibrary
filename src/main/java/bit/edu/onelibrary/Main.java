@@ -1,10 +1,13 @@
 package bit.edu.onelibrary;
 
+import bit.edu.onelibrary.community.dao.CommunityDao;
 import bit.edu.onelibrary.community.dto.CommunityDto;
 import bit.edu.onelibrary.community.dto.CommunityModifyDTO;
 import bit.edu.onelibrary.community.dto.CommunityRequest;
 import bit.edu.onelibrary.community.dto.MyCommunity;
 import bit.edu.onelibrary.community.service.CommunityService;
+import bit.edu.onelibrary.community.service.impl.CommunityServiceImpl;
+import bit.edu.onelibrary.user.dao.UserDao;
 import bit.edu.onelibrary.user.service.UserService;
 import bit.edu.onelibrary.notice.NoticeCenter;
 import bit.edu.onelibrary.util.AuthenticationStorage;
@@ -19,7 +22,7 @@ public class Main {
 
     Scanner scan = new Scanner(System.in);
 
-    private CommunityService communityService;
+    private CommunityService communityService = new CommunityServiceImpl(new CommunityDao());
 
     public static void main(String[] args) {
         Main main = new Main();
