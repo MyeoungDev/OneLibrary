@@ -20,9 +20,9 @@ public interface CommunityService {
 
     List<CommunityDto> getAllCommunities() throws SQLException, IOException;
 
-    List<String> getMyCommunities(int memberNo) throws SQLException, IOException;
+    List<String> getMyCommunities(long userNo) throws SQLException, IOException;
 
-    CommunityDto getCommunityByCommunityNo(int communityNo) throws SQLException, IOException;
+    CommunityDto getCommunityByCommunityNo(long communityNo) throws SQLException, IOException;
 
     void updateCommunity(CommunityModifyDTO communityModifyDTO) throws SQLException, IOException;
 

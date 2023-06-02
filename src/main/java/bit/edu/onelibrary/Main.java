@@ -1,13 +1,24 @@
 package bit.edu.onelibrary;
 
+import bit.edu.onelibrary.community.dto.CommunityDto;
+import bit.edu.onelibrary.community.dto.CommunityRequest;
+import bit.edu.onelibrary.community.service.CommunityService;
+import bit.edu.onelibrary.community.service.impl.CommunityServiceImpl;
 import bit.edu.onelibrary.user.service.UserService;
 import bit.edu.onelibrary.notice.NoticeCenter;
+import bit.edu.onelibrary.util.AuthenticationStorage;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
     Scanner scan = new Scanner(System.in);
+
+    private CommunityService communityService;
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -98,8 +109,39 @@ public class Main {
         // 2. 커뮤니티로 이동
     }
 
-    public void displayCommunity(){
+    public void displayCommunity() throws SQLException, IOException {
         System.out.println("===커뮤니티===");
+        System.out.println(" 1.전체 독후감 조회 \n 2.독후감 작성 \n 3.내가 쓴 독후감 조회 \n");
+        String command;
+        command = scan.nextLine();
+
+        switch(command) {
+            case "1" : displayAllCommunities();
+                break;
+            case "2" : ; break;
+            case "3" : communityService.getMyCommunities(AuthenticationStorage.getAuthentication().getUserNo()); break;
+        }
+    }
+
+    public void displayAllCommunities() throws SQLException, IOException {
+        System.out.println("===전체 독후감===");
+
+        List<CommunityDto> allCommunities = communityService.getAllCommunities();
+        for (int i = 0; i < allCommunities.size(); i++) {
+            System.out.println(i + ". " + allCommunities.get(i).getTitle());
+        }
+
+        displayCommunity();
+    }
+    public void displayCreateCommunity() throws SQLException, IOException {
+        System.out.println("===독후감 작성===");
+        System.out.println("제목 : ");
+        String title = scan.nextLine();
+        System.out.println("내용 : ");
+        String content = scan.nextLine();
+        String name = AuthenticationStorage.getAuthentication().getUserName();
+        CommunityRequest request = new CommunityRequest(AuthenticationStorage.getAuthentication().getUserNo(), title, content);
+        communityService.createCommunity(request);
     }
 
 }

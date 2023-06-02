@@ -24,4 +24,8 @@ public class UserAuthenticationDto {
     public boolean isAdmin() {
         return isAdmin;
     }
+
+    public String getUserName(){
+        return userName;
+    }
 }
