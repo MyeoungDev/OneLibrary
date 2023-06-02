@@ -217,8 +217,15 @@ public class Main {
                 System.out.println("회원가입을 다시 시도해주세요.");
                 this.displayRegister();
             } else {
-                System.out.println("회원가입이 완료되었습니다.\n");
+                System.out.println("------------------------");
+                System.out.println("\n1.확인  2.메인으로");
+                System.out.print("* 메뉴선택: ");
+                String command = scan.nextLine();
+                if (command.equals("2")) {
+                    openCenter();
+                }
                 user.register(id, pw, name, phone, address, email);
+                System.out.println("회원가입이 완료되었습니다.\n");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
