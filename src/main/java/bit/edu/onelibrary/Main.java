@@ -53,6 +53,7 @@ public class Main {
                     displayRegister();
                     break;
                 case "4":
+                    System.out.println("이용해주셔서 감사합니다.");
                     isClose = true;
                     break;
                 default:
@@ -60,7 +61,6 @@ public class Main {
                     break;
             }
         }
-        System.out.println("이용해주셔서 감사합니다.");
     }
 
     // 메인메뉴 ui
@@ -233,12 +233,13 @@ public class Main {
 
     // 로그인 후 메인 메뉴 ui
     public void displayUserMain() throws SQLException, IOException {
+        UserService service = new UserService();
         System.out.println("\n--------------------------------------");
         System.out.println("환영합니다.");
         boolean isClose = false;
         while (!isClose) {
             System.out.println("--------------------------------------");
-            System.out.println(" 1.공지사항 \n 2.커뮤니티 \n 3.종료");
+            System.out.println(" 1.공지사항 \n 2.커뮤니티 \n 3.로그아웃 \n 4.종료");
             System.out.print("\n * 메뉴선택: ");
             String command = scan.nextLine();
             System.out.println("--------------------------------------");
@@ -250,6 +251,11 @@ public class Main {
                     displayCommunityCenter();
                     break;
                 case "3":
+                    service.logout();
+                    isClose = true;
+                    openCenter();
+                    break;
+                case "4":
                     isClose = true;
                     break;
                 default:
