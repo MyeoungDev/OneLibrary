@@ -79,6 +79,22 @@ public class UserDao {
         return user;
     }
 
+    public String findUserNameByUserNo(long userNo) throws IOException, SQLException {
+        Connection connection = ConnectionManager.getConnection();
+        String sql = "SELECT user_name FROM user where user_no = ?";
 
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setLong(1, userNo);
+
+        String userName = null;
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            userName = resultSet.getString(1);
+        }
+
+        ConnectionManager.closeConnection(connection, preparedStatement, resultSet);
+
+        return userName;
+    }
 
 }

@@ -5,6 +5,7 @@ import bit.edu.onelibrary.community.dto.CommunityDto;
 import bit.edu.onelibrary.community.dto.CommunityModifyDTO;
 import bit.edu.onelibrary.community.dto.CommunityRequest;
 import bit.edu.onelibrary.community.service.CommunityService;
+import bit.edu.onelibrary.user.dao.UserDao;
 import bit.edu.onelibrary.util.AuthenticationStorage;
 
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.io.ObjectInput;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 /**
  * Some description here.
@@ -22,14 +24,18 @@ import java.util.Objects;
 public class CommunityServiceImpl implements CommunityService {
 
     private final CommunityDao communityDao;
+    private final UserDao userDao;
 
-    public CommunityServiceImpl(CommunityDao communityDao) {
+    public CommunityServiceImpl(CommunityDao communityDao, UserDao userDao) {
         this.communityDao = communityDao;
+        this.userDao = userDao;
     }
 
     @Override
     public void createCommunity(CommunityRequest request) throws SQLException, IOException {
-        communityDao.insertCommunity(request);
+//        String userName = userDao.findUserNameByUserNo(long userNo);
+//        request.setUserName(userName);
+//        communityDao.insertCommunity(request);
     }
 
     @Override
@@ -38,12 +44,12 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
-    public List<String> getMyCommunities(int memberNo) throws SQLException, IOException {
-        return communityDao.findCommunitiesByMemberNo(memberNo);
+    public List<String> getMyCommunities(long userNo) throws SQLException, IOException {
+        return communityDao.findCommunitiesByMemberNo(userNo);
     }
 
     @Override
-    public CommunityDto getCommunityByCommunityNo(int communityNo) throws SQLException, IOException {
+    public CommunityDto getCommunityByCommunityNo(long communityNo) throws SQLException, IOException {
         return communityDao.findCommunityByCommunityNo(communityNo);
     }
 

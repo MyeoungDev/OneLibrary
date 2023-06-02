@@ -30,7 +30,7 @@ public class CommunityDao {
 
         preparedStatement.setString(1, request.getCommunityTitle());
         preparedStatement.setString(2, request.getCommunityContent());
-        preparedStatement.setLong(3, request.getUserNo());
+        preparedStatement.setString(3, request.getUserName());
         preparedStatement.executeUpdate();
 
         ConnectionManager.closeConnection(connection, preparedStatement, null);
@@ -55,13 +55,13 @@ public class CommunityDao {
         return communityDtoList;
     }
 
-    public List<String> findCommunitiesByMemberNo(int memberNo) throws IOException, SQLException {
+    public List<String> findCommunitiesByMemberNo(long userNo) throws IOException, SQLException {
         List<String> communityDtos = new ArrayList<>();
         Connection connection = ConnectionManager.getConnection();
-        String sql = "SELECT title FROM community where memberNo = ?";
+        String sql = "SELECT title FROM community where member_no = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setLong(1, memberNo);
+        preparedStatement.setLong(1, userNo);
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -78,7 +78,7 @@ public class CommunityDao {
     public CommunityDto findCommunityByCommunityNo(long communityNo) throws IOException, SQLException {
         CommunityDto communityDto = null;
         Connection connection = ConnectionManager.getConnection();
-        String sql = "SELECT * FROM community where communityNo = ?";
+        String sql = "SELECT * FROM community where community_no = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setLong(1, communityNo);
@@ -117,7 +117,7 @@ public class CommunityDao {
 
         // 제목이랑 똑같이 내용도 해주면 문제가 없겠죠?
         // 이렇게 되면 제목만 수정하거나, 내용 만 수정하는 것이 문제가 없겠죠?
-        String sql = "update community set title = ?, content = ? where communityNo = ?";
+        String sql = "update community set title = ?, content = ? where community_no = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, communityDto.getTitle());
@@ -132,7 +132,7 @@ public class CommunityDao {
 
     public void deleteCommunity(long communityNo) throws IOException, SQLException {
         Connection connection = ConnectionManager.getConnection();
-        String sql = "delete from community where communityNo = ?";
+        String sql = "delete from community where community_no = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setLong(1, communityNo);
@@ -142,4 +142,6 @@ public class CommunityDao {
 
 
     }
+
+
 }
