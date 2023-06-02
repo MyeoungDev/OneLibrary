@@ -1,6 +1,7 @@
-package bit.edu.onelibrary.notice;
+package bit.edu.onelibrary.notice.dao;
 
 
+import bit.edu.onelibrary.notice.dto.BoardDTO;
 import bit.edu.onelibrary.util.ConnectionManager;
 
 import java.io.IOException;

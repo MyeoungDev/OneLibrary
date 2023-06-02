@@ -1,4 +1,7 @@
-package bit.edu.onelibrary.notice;
+package bit.edu.onelibrary.notice.service;
+import bit.edu.onelibrary.notice.dao.BoardDAO;
+import bit.edu.onelibrary.notice.dto.BoardDTO;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;

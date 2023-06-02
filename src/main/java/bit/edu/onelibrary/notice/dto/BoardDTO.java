@@ -1,4 +1,4 @@
-package bit.edu.onelibrary.notice;
+package bit.edu.onelibrary.notice.dto;
 
 import java.util.Date;
 
