@@ -13,16 +13,44 @@ public class UserDao {
 
 
     // 회원가입
-    public boolean insertUser(){
+    public boolean insertUser(String id, String password, String name, String phone, String address, String email) throws IOException, SQLException {
         boolean flag = false;
+        //insert
+        Connection con = ConnectionManager.getConnection();
+        String sql = "insert user(user_id, user_password, user_name, user_phone, user_address, user_email, is_admin) values (?,?,?,?,?,?,0)";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, id);
+        pstmt.setString(2, password);
+        pstmt.setString(3, name);
+        pstmt.setString(4, phone);
+        pstmt.setString(5, address);
+        pstmt.setString(6, email);
 
+        int affectedCount = pstmt.executeUpdate();
+        if(affectedCount > 0) {
+            flag = true;
+        }
+        ConnectionManager.closeConnection(con, pstmt, null);
         return flag;
     }
 
     // 아이디 중복 체크: 같은 아이디인 유저 목록 들고오기
-    public boolean selectByIdCount(){
+    public boolean selectByIdCount(String id) throws IOException, SQLException {
         boolean flag = false;
+        //select
+        Connection con = ConnectionManager.getConnection();
+        String sql = "select count(user_id) from user where user_id = ?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, id);
+        ResultSet rs = pstmt.executeQuery();
 
+        if(rs.next()){
+            if(rs.getInt(1)>0){
+                flag = true;
+            }
+        }
+
+        ConnectionManager.closeConnection(con, pstmt, rs);
         return flag;
     }
 
@@ -33,7 +61,7 @@ public class UserDao {
 
         // 커넥션
         Connection con = ConnectionManager.getConnection();
-        String sql = "SELECT * FROM board.user where user_id= ? ";
+        String sql = "SELECT * FROM user where user_id= ? ";
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setString(1, userId);
         ResultSet rs = pstmt.executeQuery();
@@ -51,6 +79,22 @@ public class UserDao {
         return user;
     }
 
+    public String findUserNameByUserNo(long userNo) throws IOException, SQLException {
+        Connection connection = ConnectionManager.getConnection();
+        String sql = "SELECT user_name FROM user where user_no = ?";
 
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setLong(1, userNo);
+
+        String userName = null;
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            userName = resultSet.getString(1);
+        }
+
+        ConnectionManager.closeConnection(connection, preparedStatement, resultSet);
+
+        return userName;
+    }
 
 }

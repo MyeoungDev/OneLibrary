@@ -86,8 +86,13 @@ public class BoardDAO {
         while(rs.next()){
             // 로직이 들어오지 않는다 !
             // DB의 내용을 로컬데이터셋(java beans)으로 저장하는 것이 주 목적
-            item = new BoardDTO(rs.getInt(1), rs.getString(2),
-                    rs.getString(3), rs.getString(4), rs.getDate(5));
+            item = new BoardDTO(
+                rs.getInt(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getString(4),
+                rs.getDate(5)
+            );
             list.add(item);
         }
 
