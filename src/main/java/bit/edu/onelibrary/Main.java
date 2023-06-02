@@ -206,9 +206,7 @@ public class Main {
                 System.out.println("회원가입을 다시 시도해주세요.");
                 this.displayRegister();
             } else {
-                if (user.register(id, pw, name, phone, address, email)) {
-                    System.out.println("회원가입이 완료되었습니다.");
-                }
+                System.out.println("회원가입이 완료되었습니다.");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
