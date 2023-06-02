@@ -176,8 +176,22 @@ public class Main {
         pw = scan.nextLine();
         System.out.print("이름 : ");
         name = scan.nextLine();
-        System.out.print("전화번호 : ");
-        phone = scan.nextLine();
+
+        // 전화번호에 숫자만 입력하도록 처리
+        boolean validPhone = false;
+        do {
+            System.out.print("전화번호 (숫자만 입력해주세요): ");
+            phone = scan.nextLine();
+            // \\d는 숫자로만 이루어진 정규식
+            //matches를 사용하여 입력된 문자열이 숫자로만 이루어져있는지 확인
+            // + 는 하나 이상의 연속된 숫자로 이루어져야 함을 나타냄
+            if (phone.matches("\\d+")) {
+                validPhone = true;
+            } else {
+                System.out.println("전화번호에는 숫자만 입력해주세요.");
+            }
+        } while (!validPhone);
+
         System.out.print("주소 : ");
         address = scan.nextLine();
         System.out.print("이메일 : ");
