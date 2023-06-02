@@ -30,8 +30,8 @@ public class Main {
 
     public void openCenter() throws SQLException, IOException{
         boolean isClose = false;
-        System.out.println("--------------------------------------");
-        System.out.println("\n안녕하세요! 도서관 커뮤니티 센터입니다.");
+        System.out.println("\n--------------------------------------");
+        System.out.println("안녕하세요! 도서관 커뮤니티 센터입니다.");
         Scanner scan = new Scanner(System.in);
         String command;
         while(!isClose) {
@@ -42,9 +42,12 @@ public class Main {
                 case "1" : displayNotice(); break;
                 case "2" : displayLogin(); isClose=true; break;
                 case "3" : displayRegister(); break;
-                case "4" : isClose=true;
+                case "4" : isClose=true; break;
+                default:
+                    System.out.println("\n입력값이 잘못되었습니다. 다시 입력해주세요."); break;
             }
         }
+        System.out.println("이용해주셔서 감사합니다.");
     }
 
     // 메인메뉴 ui
@@ -106,7 +109,7 @@ public class Main {
     // 로그인 ui 메소드
     public void displayLogin() throws SQLException, IOException{
         while (true){
-            System.out.println("\n\n----*----로그인----*----");
+            System.out.println("\n\n----*----로그인----*-----");
             UserService user = new UserService();
             String id;
             String pw;
@@ -115,7 +118,9 @@ public class Main {
             id = scan.nextLine();
             System.out.print("비밀번호: ");
             pw = scan.nextLine();
+            System.out.println("------------------------");
             System.out.println("\n1.확인  2.메인으로");
+            System.out.print("* 메뉴선택: ");
             String command = scan.nextLine();
             if (command.equals("2")){
                 displayUserMain();
@@ -170,17 +175,12 @@ public class Main {
                 try {
                     if(user.register(id, pw, name, phone, address, email)){
                         System.out.println("회원가입이 완료되었습니다.");
-                        this.displayMainMenu();
                     }
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
+                } catch (SQLException | IOException e) {
                     throw new RuntimeException(e);
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (SQLException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -200,6 +200,7 @@ public class Main {
 
     // 로그인 후 메인 메뉴 ui
     public void displayUserMain() throws SQLException, IOException{
+        System.out.println("\n--------------------------------------");
         System.out.println("환영합니다.");
         boolean isClose = false;
         while(!isClose) {
@@ -213,7 +214,7 @@ public class Main {
                 case "2" : displayCommunity(); break;
                 case "3" : isClose = true; break;
                 default:
-                    System.out.println("잘못된 입력입니다.");
+                    System.out.println("\n입력값이 잘못되었습니다. 다시 입력해주세요.");
             }
         }
 
