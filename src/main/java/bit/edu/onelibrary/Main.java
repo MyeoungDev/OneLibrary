@@ -39,14 +39,14 @@ public class Main {
 
     public void openCenter() throws SQLException, IOException {
         boolean isClose = false;
-        System.out.println("\n--------------------------------------");
+        System.out.println("------------------------------------------------");
         System.out.println("안녕하세요! 도서관 커뮤니티 센터입니다.");
         Scanner scan = new Scanner(System.in);
         String command;
         while (!isClose) {
             this.displayMainMenu();
             command = scan.nextLine();
-            System.out.println("--------------------------------------");
+            System.out.println("------------------------------------------------");
             switch (command) {
                 case "1":
                     displayNotice();
@@ -71,7 +71,7 @@ public class Main {
 
     // 메인메뉴 ui
     public void displayMainMenu() {
-        System.out.println("--------------------------------------");
+        System.out.println("------------------------------------------------");
         System.out.println(" 1.공지사항 \n 2.로그인 \n 3.회원가입 \n 4.종료");
         System.out.print("\n * 메뉴선택: ");
     }
@@ -81,11 +81,11 @@ public class Main {
     public void displayNotice() {
         UserService userService = new UserService();
         try {
-            System.out.println("\n\n========== 공지사항 ==========");
+            System.out.println("\n\n================ 공지사항 ================");
             this.displayAuth(userService.isAdmin());
         } catch (NullPointerException e) {
             System.out.println("* 비회원으로 이용중입니다.");
-            System.out.println("-----------------------------");
+            System.out.println("------------------------------------------------");
             this.displayAuth(false);
         }
     }
@@ -148,7 +148,7 @@ public class Main {
             System.out.print("* 메뉴선택: ");
             String command = scan.nextLine();
             if (command.equals("2")) {
-                displayUserMain();
+                openCenter();
                 break;
             }
 

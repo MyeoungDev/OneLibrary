@@ -135,14 +135,14 @@ public class NoticeCenter {
 
 	public void displayMainMenu() {
 		System.out.println();
-		System.out.println("--------------------------------------");
+		System.out.println("------------------------------------------------");
 		System.out.println("메인메뉴: 1.작성 | 2.상세보기 | 3.전체삭제 | 4.나가기");
 		System.out.print("메뉴선택: ");
 		
 	}
 	public void userDisplayMainMenu() {
 		System.out.println();
-		System.out.println("--------------------------------------");
+		System.out.println("------------------------------------------------");
 		System.out.println("메인메뉴: 1.상세보기 | 2.나가기");
 		System.out.print("메뉴선택: ");
 
@@ -150,7 +150,7 @@ public class NoticeCenter {
 
 	public boolean displayConfirm(Scanner scan) {
 		boolean flag = false;
-		System.out.println("--------------------------------------");
+		System.out.println("------------------------------------------------");
 		System.out.println("메뉴: 1.확인 | 2.취소");
 		System.out.print("메뉴선택: ");
 		String command = scan.nextLine();
@@ -161,12 +161,12 @@ public class NoticeCenter {
 	}
 
 	public void displaySubMenu() {
-		System.out.println("--------------------------------------");
+		System.out.println("------------------------------------------------");
 		System.out.println("메뉴: 1.수정 | 2.삭제 | 3.목록으로 돌아가기");
 		System.out.print("메뉴선택: ");
 	}
 	public void userDisplaySubMenu() {
-		System.out.println("--------------------------------------");
+		System.out.println("------------------------------------------------");
 		System.out.println("메뉴: 1.목록으로 돌아가기");
 		System.out.print("메뉴선택: ");
 	}
