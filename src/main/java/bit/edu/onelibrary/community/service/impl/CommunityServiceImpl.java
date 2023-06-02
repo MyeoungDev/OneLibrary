@@ -7,6 +7,7 @@ import bit.edu.onelibrary.community.dto.CommunityRequest;
 import bit.edu.onelibrary.community.dto.MyCommunity;
 import bit.edu.onelibrary.community.service.CommunityService;
 import bit.edu.onelibrary.user.dao.UserDao;
+import bit.edu.onelibrary.user.dto.UserAuthenticationDto;
 import bit.edu.onelibrary.util.AuthenticationStorage;
 
 import java.io.IOException;
@@ -52,7 +53,8 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public void updateCommunity(CommunityModifyDTO communityModifyDTO) throws SQLException, IOException {
-        if(Objects.equals(communityModifyDTO.getUserNo(),AuthenticationStorage.getAuthentication().getUserNo())) {
+        UserAuthenticationDto authentication = AuthenticationStorage.getAuthentication();
+        if(Objects.equals(communityModifyDTO.getUserNo(),authentication.getUserNo()) || authentication.isAdmin()) {
             communityDao.updateCommunity(communityModifyDTO);
         }
         else {
@@ -64,7 +66,8 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     public void deleteCommunity(long communityNo) throws SQLException, IOException {
         CommunityDto community = communityDao.findCommunityByCommunityNo(communityNo);
-        if (Objects.equals(community.getUserNo(), AuthenticationStorage.getAuthentication().getUserNo())) {
+        UserAuthenticationDto authentication = AuthenticationStorage.getAuthentication();
+        if (Objects.equals(community.getUserNo(), authentication.getUserNo()) || authentication.isAdmin()) {
             communityDao.deleteCommunity(communityNo);
         } else {
             System.out.println("본인이 작성한 독후감만 삭제할 수 있습니다.");
