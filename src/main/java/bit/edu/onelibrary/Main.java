@@ -1,7 +1,9 @@
 package bit.edu.onelibrary;
 
 import bit.edu.onelibrary.community.dto.CommunityDto;
+import bit.edu.onelibrary.community.dto.CommunityModifyDTO;
 import bit.edu.onelibrary.community.dto.CommunityRequest;
+import bit.edu.onelibrary.community.dto.MyCommunity;
 import bit.edu.onelibrary.community.service.CommunityService;
 import bit.edu.onelibrary.user.service.UserService;
 import bit.edu.onelibrary.notice.NoticeCenter;
@@ -9,7 +11,9 @@ import bit.edu.onelibrary.util.AuthenticationStorage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
@@ -210,7 +214,7 @@ public class Main {
             System.out.println("--------------------------------------");
             switch(command) {
                 case "1" : displayNotice(); break;
-                case "2" : displayCommunity(); break;
+                case "2" : displayCommunityCenter(); break;
                 case "3" : isClose = true; break;
                 default:
                     System.out.println("잘못된 입력입니다.");
@@ -219,7 +223,7 @@ public class Main {
 
     }
 
-    public void displayCommunity() throws SQLException, IOException {
+    public void displayCommunityCenter() throws SQLException, IOException {
         System.out.println("===커뮤니티===");
         System.out.println(" 1.전체 독후감 조회 \n 2.독후감 작성 \n 3.내가 쓴 독후감 조회 \n");
         String command;
@@ -228,8 +232,8 @@ public class Main {
         switch(command) {
             case "1" : displayAllCommunities();
                 break;
-            case "2" : ; break;
-            case "3" : communityService.getMyCommunities(AuthenticationStorage.getAuthentication().getUserNo()); break;
+            case "2" : displayCreateCommunity(); break;
+            case "3" : displayMyCommunity(); break;
         }
     }
 
@@ -241,7 +245,24 @@ public class Main {
             System.out.println(i + ". " + allCommunities.get(i).getTitle());
         }
 
-        displayCommunity();
+        System.out.println("0. 이전 페이지로");
+        int command;
+        command = scan.nextInt();
+
+
+        if (command == 0) {
+            displayCommunityCenter();
+            return;
+        } else if (command > allCommunities.size() || command < 1) {
+            System.out.println("다시 입력해주세요.");
+            displayMyCommunity();
+        }else {// 커뮤니티 상세
+            System.out.println("제목 : "+ allCommunities.get(command).getTitle());
+            System.out.println("내용 : "+ allCommunities.get(command).getCommunityContent());
+            System.out.println("작성시간 : "+ allCommunities.get(command).getCreateAt());
+        }
+
+        displayCommunityCenter();
     }
     public void displayCreateCommunity() throws SQLException, IOException {
         System.out.println("===독후감 작성===");
@@ -249,9 +270,111 @@ public class Main {
         String title = scan.nextLine();
         System.out.println("내용 : ");
         String content = scan.nextLine();
-        String name = AuthenticationStorage.getAuthentication().getUserName();
-        CommunityRequest request = new CommunityRequest(AuthenticationStorage.getAuthentication().getUserNo(), title, content);
-        communityService.createCommunity(request);
+
+        System.out.println("0. 작성 취소");
+        System.out.println("1. 작성 완료");
+
+        int command = scan.nextInt();
+        if(command == 0){
+            displayCommunityCenter();
+            return;
+        }
+        if(command==1){
+            String name = AuthenticationStorage.getAuthentication().getUserName();
+            CommunityRequest request = new CommunityRequest(AuthenticationStorage.getAuthentication().getUserNo(), title, content, name);
+            communityService.createCommunity(request);
+            displayCommunityCenter();
+        }
     }
+
+    public void displayMyCommunity() throws SQLException, IOException {
+        System.out.println("===내가 쓴 독후감===");
+
+        List<MyCommunity> myCommunityList = communityService.getMyCommunities(AuthenticationStorage.getAuthentication().getUserNo());
+        for (int i = 0; i < myCommunityList.size(); i++) {
+            System.out.println(i + ". " + myCommunityList.get(i).getTitle());
+        }
+        System.out.println("0. 이전 페이지로");
+        int command = scan.nextInt();
+
+        if (command == 0) {
+            displayCommunityCenter();
+            return;
+        } else if (command > myCommunityList.size() || command < 1) {
+            System.out.println("다시 입력해주세요.");
+            displayMyCommunity();
+        }else {// 커뮤니티 상세
+            System.out.println("제목 : "+ myCommunityList.get(command).getTitle());
+            System.out.println("내용 : "+ myCommunityList.get(command).getCommunityContent());
+            System.out.println("작성시간 : "+ myCommunityList.get(command).getCreateAt());
+
+            System.out.println("1. 수정");
+            System.out.println("2. 삭제");
+            System.out.println("0. 목록으로");
+
+            int menuCommand = scan.nextInt();
+
+
+            switch (menuCommand){
+                case 1 :
+                    displayUpdateCommunity(myCommunityList.get(command).getCommunityNo());
+                    break;
+                case 2 :
+                    displayDeleteCommunity(myCommunityList.get(command).getCommunityNo());
+                    break;
+                case 0:
+                    displayCommunityCenter();
+                    break;
+                default:
+                    throw new NoSuchElementException();
+            }
+
+
+
+        }
+
+    }
+
+    public void displayUpdateCommunity(long communityNo) {
+
+        System.out.println("수정 페이지 입니다.");
+        System.out.println("제목을 입력하세요: ");
+        String title = scan.nextLine();
+        System.out.println("내용을 입력하세요: ");
+        String content = scan.nextLine();
+
+        CommunityModifyDTO communityModifyDTO = new CommunityModifyDTO(
+                communityNo,
+                title,
+                content,
+                AuthenticationStorage.getAuthentication().getUserNo()
+        );
+
+        try {
+            communityService.updateCommunity(communityModifyDTO);
+        } catch (IOException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void displayDeleteCommunity(long communityNo) throws SQLException, IOException {
+        System.out.println("정말 삭제하시겠습니까?");
+        System.out.println("1. 확인  2. 취소");
+        int command = scan.nextInt();
+
+        if (command == 1) {
+            communityService.deleteCommunity(communityNo);
+            System.out.println("삭제하였습니다.");
+        }
+
+        if (command == 2) {
+            System.out.println("삭제를 취소하였습니다.");
+        }
+
+        displayCommunityCenter();
+
+    }
+
 
 }

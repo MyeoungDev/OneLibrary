@@ -12,10 +12,11 @@ public class CommunityRequest {
 
     private boolean isDeleted;
 
-    public CommunityRequest(long userNo, String communityTitle, String communityContent) {
+    public CommunityRequest(long userNo, String communityTitle, String communityContent,String userName) {
         this.userNo = userNo;
         this.communityTitle = communityTitle;
         this.communityContent = communityContent;
+        this.userName = userName;
         this.createAt = LocalDateTime.now();
         this.isDeleted = false;
     }
@@ -44,7 +45,4 @@ public class CommunityRequest {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 }

@@ -3,6 +3,7 @@ package bit.edu.onelibrary.community.dao;
 import bit.edu.onelibrary.community.dto.CommunityDto;
 import bit.edu.onelibrary.community.dto.CommunityModifyDTO;
 import bit.edu.onelibrary.community.dto.CommunityRequest;
+import bit.edu.onelibrary.community.dto.MyCommunity;
 import bit.edu.onelibrary.community.entity.Community;
 import bit.edu.onelibrary.util.ConnectionManager;
 import com.sun.jdi.VMOutOfMemoryException;
@@ -47,7 +48,10 @@ public class CommunityDao {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
-            communityDtoList.add(new CommunityDto(resultSet.getString(1)));
+            communityDtoList.add(new CommunityDto(resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getLong(3),
+                    resultSet.getTimestamp(4).toLocalDateTime()));
         }
 
         ConnectionManager.closeConnection(connection, preparedStatement, resultSet);
@@ -55,10 +59,10 @@ public class CommunityDao {
         return communityDtoList;
     }
 
-    public List<String> findCommunitiesByMemberNo(long userNo) throws IOException, SQLException {
-        List<String> communityDtos = new ArrayList<>();
+    public List<MyCommunity> findCommunitiesByMemberNo(long userNo) throws IOException, SQLException {
+        List<MyCommunity> myCommunityDtos = new ArrayList<>();
         Connection connection = ConnectionManager.getConnection();
-        String sql = "SELECT title FROM community where member_no = ?";
+        String sql = "SELECT * FROM community where member_no = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setLong(1, userNo);
@@ -66,12 +70,16 @@ public class CommunityDao {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
-            communityDtos.add(resultSet.getString(1));
+            myCommunityDtos.add(new MyCommunity(resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getLong(3),
+                    resultSet.getTimestamp(4).toLocalDateTime()));
         }
+        preparedStatement.executeUpdate();
 
         ConnectionManager.closeConnection(connection, preparedStatement, resultSet);
 
-        return communityDtos;
+        return myCommunityDtos;
 
     }
 

@@ -3,6 +3,7 @@ package bit.edu.onelibrary.community.service;
 import bit.edu.onelibrary.community.dto.CommunityDto;
 import bit.edu.onelibrary.community.dto.CommunityModifyDTO;
 import bit.edu.onelibrary.community.dto.CommunityRequest;
+import bit.edu.onelibrary.community.dto.MyCommunity;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,7 +21,7 @@ public interface CommunityService {
 
     List<CommunityDto> getAllCommunities() throws SQLException, IOException;
 
-    List<String> getMyCommunities(long userNo) throws SQLException, IOException;
+    List<MyCommunity> getMyCommunities(long userNo) throws SQLException, IOException;
 
     CommunityDto getCommunityByCommunityNo(long communityNo) throws SQLException, IOException;
 

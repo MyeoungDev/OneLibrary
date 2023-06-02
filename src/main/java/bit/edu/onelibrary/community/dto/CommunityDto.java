@@ -51,5 +51,9 @@ public class CommunityDto {
         return userNo;
     }
 
+    public LocalDateTime getCreateAt() {
+        return createAt;
+    }
+
     // 더 필요한건 아진님이 작성!
 }

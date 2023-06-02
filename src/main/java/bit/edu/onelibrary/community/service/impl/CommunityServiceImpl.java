@@ -4,6 +4,7 @@ import bit.edu.onelibrary.community.dao.CommunityDao;
 import bit.edu.onelibrary.community.dto.CommunityDto;
 import bit.edu.onelibrary.community.dto.CommunityModifyDTO;
 import bit.edu.onelibrary.community.dto.CommunityRequest;
+import bit.edu.onelibrary.community.dto.MyCommunity;
 import bit.edu.onelibrary.community.service.CommunityService;
 import bit.edu.onelibrary.user.dao.UserDao;
 import bit.edu.onelibrary.util.AuthenticationStorage;
@@ -44,7 +45,7 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     @Override
-    public List<String> getMyCommunities(long userNo) throws SQLException, IOException {
+    public List<MyCommunity> getMyCommunities(long userNo) throws SQLException, IOException {
         return communityDao.findCommunitiesByMemberNo(userNo);
     }
 
@@ -78,6 +79,8 @@ public class CommunityServiceImpl implements CommunityService {
     // 1. 이 게시글의 userNo 랑 지금 로그인되어 있는 내 userNo가 같은지 확인
     // 2. 만약 같다면 그때 수정 시켜주기
     // 3. 만약 틀리다면 수정 불가능
+
+
 
 
 }
