@@ -16,21 +16,13 @@ public class CommunityDto {
     private boolean isDeleted;
     private long userNo;
 
-    public CommunityDto(String title) {
-        this.title = title;
-    }
-
-    public CommunityDto(long communityNo){
+    public CommunityDto(long communityNo, String title, String communityContent, LocalDateTime createAt, long userNo) {
         this.communityNo = communityNo;
-    }
-
-    public CommunityDto(String title, String communityContent, long userNo, LocalDateTime createAt){
         this.title = title;
         this.communityContent = communityContent;
-        this.userNo = userNo;
         this.createAt = createAt;
+        this.userNo = userNo;
     }
-
     public String getTitle(){
         return title;
     }

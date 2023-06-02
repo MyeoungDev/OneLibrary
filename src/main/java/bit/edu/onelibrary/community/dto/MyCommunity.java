@@ -10,12 +10,11 @@ public class MyCommunity {
     private boolean isDeleted;
     private long userNo;
 
-    public MyCommunity(long communityNo, String title, String communityContent, LocalDateTime createAt, boolean isDeleted, long userNo) {
+    public MyCommunity(long communityNo, String title, String communityContent, LocalDateTime createAt, long userNo) {
         this.communityNo = communityNo;
         this.title = title;
         this.communityContent = communityContent;
         this.createAt = createAt;
-        this.isDeleted = isDeleted;
         this.userNo = userNo;
     }
     public MyCommunity(String title, String communityContent, long userNo, LocalDateTime createAt){

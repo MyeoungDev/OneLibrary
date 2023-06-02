@@ -12,7 +12,9 @@ import bit.edu.onelibrary.user.service.UserService;
 import bit.edu.onelibrary.notice.NoticeCenter;
 import bit.edu.onelibrary.util.AuthenticationStorage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -29,6 +31,7 @@ public class Main {
         try {
             main.openCenter();
         } catch (SQLException | IOException e) {
+            e.printStackTrace();
             System.out.println("시스템이 이상합니다.");
             System.exit(1);
         }
@@ -239,12 +242,16 @@ public class Main {
         UserService service = new UserService();
         System.out.println("\n--------------------------------------");
         System.out.println("환영합니다.");
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         boolean isClose = false;
         while (!isClose) {
             System.out.println("--------------------------------------");
             System.out.println(" 1.공지사항 \n 2.커뮤니티 \n 3.로그아웃 \n 4.종료");
             System.out.print("\n * 메뉴선택: ");
-            String command = scan.nextLine();
+            String command = br.readLine();
+//            String command = scan.nextLine();
             System.out.println("--------------------------------------");
             switch (command) {
                 case "1":
@@ -337,7 +344,7 @@ public class Main {
 
         List<MyCommunity> myCommunityList = communityService.getMyCommunities(AuthenticationStorage.getAuthentication().getUserNo());
         for (int i = 0; i < myCommunityList.size(); i++) {
-            System.out.println(i + ". " + myCommunityList.get(i).getTitle());
+            System.out.println(i + 1 + ". " + myCommunityList.get(i).getTitle());
         }
         System.out.println("0. 이전 페이지로");
         int command = scan.nextInt();
@@ -349,9 +356,9 @@ public class Main {
             System.out.println("다시 입력해주세요.");
             displayMyCommunity();
         }else {// 커뮤니티 상세
-            System.out.println("제목 : "+ myCommunityList.get(command).getTitle());
-            System.out.println("내용 : "+ myCommunityList.get(command).getCommunityContent());
-            System.out.println("작성시간 : "+ myCommunityList.get(command).getCreateAt());
+            System.out.println("제목 : "+ myCommunityList.get(command - 1).getTitle());
+            System.out.println("내용 : "+ myCommunityList.get(command - 1).getCommunityContent());
+            System.out.println("작성시간 : "+ myCommunityList.get(command - 1).getCreateAt());
 
             System.out.println("1. 수정");
             System.out.println("2. 삭제");
@@ -362,16 +369,14 @@ public class Main {
 
             switch (menuCommand){
                 case 1 :
-                    displayUpdateCommunity(myCommunityList.get(command).getCommunityNo());
+                    displayUpdateCommunity(myCommunityList.get(command - 1).getCommunityNo());
                     break;
                 case 2 :
-                    displayDeleteCommunity(myCommunityList.get(command).getCommunityNo());
+                    displayDeleteCommunity(myCommunityList.get(command - 1).getCommunityNo());
                     break;
                 case 0:
                     displayCommunityCenter();
                     break;
-                default:
-                    throw new NoSuchElementException();
             }
 
 
@@ -380,14 +385,21 @@ public class Main {
 
     }
 
-    public void displayUpdateCommunity(long communityNo) {
+    public void displayUpdateCommunity(long communityNo) throws IOException {
 
         System.out.println("수정 페이지 입니다.");
         System.out.println("제목을 입력하세요: ");
-        String title = scan.nextLine();
-        System.out.println("내용을 입력하세요: ");
-        String content = scan.nextLine();
+        String title = "";
 
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        title = br.readLine();
+//        String title = scan.nextLine();
+
+        System.out.println("내용을 입력하세요: ");
+        String content = "";
+        content = br.readLine();
+
+        ;
         CommunityModifyDTO communityModifyDTO = new CommunityModifyDTO(
                 communityNo,
                 title,
@@ -400,6 +412,7 @@ public class Main {
         } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
+
 
     }
 

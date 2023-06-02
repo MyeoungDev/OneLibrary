@@ -2,10 +2,8 @@ package bit.edu.onelibrary.community.dto;
 
 public class CommunityModifyDTO {
     private long communityNo;
-
     private String title;
     private String communityContent;
-
     private long userNo;
 
     public CommunityModifyDTO(long communityNo, String title, String communityContent, long userNo) {

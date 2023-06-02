@@ -63,10 +63,10 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public void deleteCommunity(long communityNo) throws SQLException, IOException {
-        if(Objects.equals(communityNo,AuthenticationStorage.getAuthentication().getUserNo())) {
+        CommunityDto community = communityDao.findCommunityByCommunityNo(communityNo);
+        if (Objects.equals(community.getUserNo(), AuthenticationStorage.getAuthentication().getUserNo())) {
             communityDao.deleteCommunity(communityNo);
-        }
-        else {
+        } else {
             System.out.println("본인이 작성한 독후감만 삭제할 수 있습니다.");
         }
     }

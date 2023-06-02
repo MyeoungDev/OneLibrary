@@ -42,16 +42,19 @@ public class CommunityDao {
     public List<CommunityDto> findAllCommunities() throws IOException, SQLException {
         List<CommunityDto> communityDtoList = new ArrayList<>();
         Connection connection = ConnectionManager.getConnection();
-        String sql = "SELECT title FROM community";
+        String sql = "SELECT * FROM community";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
-            communityDtoList.add(new CommunityDto(resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getLong(3),
-                    resultSet.getTimestamp(4).toLocalDateTime()));
+            communityDtoList.add(new CommunityDto(
+                        resultSet.getLong("community_no"),
+                        resultSet.getString("community_title"),
+                        resultSet.getString("community_content"),
+                        resultSet.getTimestamp("crate_at").toLocalDateTime(),
+                        resultSet.getLong("user_no")
+            ));
         }
 
         ConnectionManager.closeConnection(connection, preparedStatement, resultSet);
@@ -62,7 +65,7 @@ public class CommunityDao {
     public List<MyCommunity> findCommunitiesByMemberNo(long userNo) throws IOException, SQLException {
         List<MyCommunity> myCommunityDtos = new ArrayList<>();
         Connection connection = ConnectionManager.getConnection();
-        String sql = "SELECT * FROM community where member_no = ?";
+        String sql = "SELECT * FROM community WHERE user_no = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setLong(1, userNo);
@@ -70,12 +73,16 @@ public class CommunityDao {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
-            myCommunityDtos.add(new MyCommunity(resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getLong(3),
-                    resultSet.getTimestamp(4).toLocalDateTime()));
+            myCommunityDtos.add(new MyCommunity(
+                    resultSet.getLong("community_no"),
+                    resultSet.getString("community_title"),
+                    resultSet.getString("community_content"),
+                    resultSet.getTimestamp("crate_at").toLocalDateTime(),
+                    resultSet.getLong("user_no")
+                    )
+            );
         }
-        preparedStatement.executeUpdate();
+//        preparedStatement.executeUpdate();
 
         ConnectionManager.closeConnection(connection, preparedStatement, resultSet);
 
@@ -94,10 +101,11 @@ public class CommunityDao {
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             communityDto = new CommunityDto(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getLong(3),
-                    resultSet.getTimestamp(4).toLocalDateTime()
+                    resultSet.getLong("community_no"),
+                    resultSet.getString("community_title"),
+                    resultSet.getString("community_content"),
+                    resultSet.getTimestamp("crate_at").toLocalDateTime(),
+                    resultSet.getLong("user_no")
             );
         }
 
@@ -110,12 +118,6 @@ public class CommunityDao {
         Connection connection = ConnectionManager.getConnection();
         CommunityDto communityDto = findCommunityByCommunityNo(modifyDTO.getCommunityNo());
 
-
-
-
-        // 만약 title이 null이면 문제가 있겠져?
-        // 그렇다면 기존에 쓰였던 제목을 그대로 넣어주면 문제가 없겟죠?
-
         if(modifyDTO.getTitle() == null){
             modifyDTO.setTitle(communityDto.getTitle());
         }
@@ -123,14 +125,12 @@ public class CommunityDao {
             modifyDTO.setCommunityContent(communityDto.getCommunityContent());
         }
 
-        // 제목이랑 똑같이 내용도 해주면 문제가 없겠죠?
-        // 이렇게 되면 제목만 수정하거나, 내용 만 수정하는 것이 문제가 없겠죠?
-        String sql = "update community set title = ?, content = ? where community_no = ?";
+        String sql = "UPDATE community SET community_title = ?, community_content = ? WHERE community_no = ?";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, communityDto.getTitle());
+        preparedStatement.setString(1, modifyDTO.getTitle());
         preparedStatement.setString(2, modifyDTO.getCommunityContent());
-        preparedStatement.setLong(3, communityDto.getUserNo());
+        preparedStatement.setLong(3, modifyDTO.getCommunityNo());
         preparedStatement.executeUpdate();
 
         ConnectionManager.closeConnection(connection, preparedStatement, null);
