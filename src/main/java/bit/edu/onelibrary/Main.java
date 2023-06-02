@@ -3,12 +3,12 @@ package bit.edu.onelibrary;
 import bit.edu.onelibrary.community.dto.CommunityDto;
 import bit.edu.onelibrary.community.dto.CommunityRequest;
 import bit.edu.onelibrary.community.service.CommunityService;
-import bit.edu.onelibrary.community.service.impl.CommunityServiceImpl;
 import bit.edu.onelibrary.user.service.UserService;
 import bit.edu.onelibrary.notice.NoticeCenter;
 import bit.edu.onelibrary.util.AuthenticationStorage;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,10 +20,15 @@ public class Main {
 
     public static void main(String[] args) {
         Main main = new Main();
-        main.openCenter();
+        try {
+            main.openCenter();
+        } catch (SQLException | IOException e) {
+            System.out.println("시스템이 이상합니다.");
+            System.exit(1);
+        }
     }
 
-    public void openCenter(){
+    public void openCenter() throws SQLException, IOException{
         boolean isClose = false;
         System.out.println("--------------------------------------");
         System.out.println("\n안녕하세요! 도서관 커뮤니티 센터입니다.");
@@ -99,7 +104,7 @@ public class Main {
     }
 
     // 로그인 ui 메소드
-    public void displayLogin(){
+    public void displayLogin() throws SQLException, IOException{
         while (true){
             System.out.println("\n\n----*----로그인----*----");
             UserService user = new UserService();
@@ -194,7 +199,7 @@ public class Main {
     }
 
     // 로그인 후 메인 메뉴 ui
-    public void displayUserMain(){
+    public void displayUserMain() throws SQLException, IOException{
         System.out.println("환영합니다.");
         boolean isClose = false;
         while(!isClose) {
