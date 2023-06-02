@@ -63,4 +63,8 @@ public class UserService {
         UserAuthenticationDto authentication = AuthenticationStorage.getAuthentication();
         return authentication.isAdmin();
     }
+
+    public void logout(){
+        AuthenticationStorage.removeAuthentication();
+    }
 }
