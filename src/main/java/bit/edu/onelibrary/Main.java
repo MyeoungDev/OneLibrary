@@ -3,6 +3,7 @@ package bit.edu.onelibrary;
 import bit.edu.onelibrary.community.dto.CommunityDto;
 import bit.edu.onelibrary.community.dto.CommunityRequest;
 import bit.edu.onelibrary.community.service.CommunityService;
+import bit.edu.onelibrary.user.dto.UserDto;
 import bit.edu.onelibrary.user.service.UserService;
 import bit.edu.onelibrary.notice.NoticeCenter;
 import bit.edu.onelibrary.util.AuthenticationStorage;
@@ -203,6 +204,7 @@ public class Main {
             if (user.isIdDuplicated(id)) {
                 System.out.println("이미 존재하는 아이디입니다.");
                 System.out.println("회원가입을 다시 시도해주세요.");
+                this.displayRegister();
             } else {
                 if (user.register(id, pw, name, phone, address, email)) {
                     System.out.println("회원가입이 완료되었습니다.");
