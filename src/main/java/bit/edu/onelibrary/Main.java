@@ -276,7 +276,15 @@ public class Main {
     }
 
     public void displayCommunityCenter() throws SQLException, IOException {
-        System.out.println("===커뮤니티===");
+        System.out.println("_     _      _     _      _     _      _     _      _     _      _     _      _     _      _     _      _     _   \n" +
+                "  (c).-.(c)    (c).-.(c)    (c).-.(c)    (c).-.(c)    (c).-.(c)    (c).-.(c)    (c).-.(c)    (c).-.(c)    (c).-.(c)  \n" +
+                "   / ._. \\      / ._. \\      / ._. \\      / ._. \\      / ._. \\      / ._. \\      / ._. \\      / ._. \\      / ._. \\   \n" +
+                " __\\( Y )/__  __\\( Y )/__  __\\( Y )/__  __\\( Y )/__  __\\( Y )/__  __\\( Y )/__  __\\( Y )/__  __\\( Y )/__  __\\( Y )/__ \n" +
+                "(_.-/'-'\\-._)(_.-/'-'\\-._)(_.-/'-'\\-._)(_.-/'-'\\-._)(_.-/'-'\\-._)(_.-/'-'\\-._)(_.-/'-'\\-._)(_.-/'-'\\-._)(_.-/'-'\\-._)\n" +
+                "   || C ||      || O ||      || M ||      || M ||      || U ||      || N ||      || I ||      || T ||      || Y ||   \n" +
+                " _.' `-' '._  _.' `-' '._  _.' `-' '._  _.' `-' '._  _.' `-' '._  _.' `-' '._  _.' `-' '._  _.' `-' '._  _.' `-' '._ \n" +
+                "(.-./`-'\\.-.)(.-./`-'\\.-.)(.-./`-'\\.-.)(.-./`-'\\.-.)(.-./`-'\\.-.)(.-./`-'\\.-.)(.-./`-'\\.-.)(.-./`-'\\.-.)(.-./`-'\\.-.)\n" +
+                " `-'     `-'  `-'     `-'  `-'     `-'  `-'     `-'  `-'     `-'  `-'     `-'  `-'     `-'  `-'     `-'  `-'     `-'");
         System.out.println(" 1.전체 독후감 조회 \n 2.독후감 작성 \n 3.내가 쓴 독후감 조회 \n");
         String command;
         command = scan.nextLine();
@@ -290,7 +298,15 @@ public class Main {
     }
 
     public void displayAllCommunities() throws SQLException, IOException {
-        System.out.println("===전체 독후감===");
+        System.out.println(".-. .-')                           .-. .-')    _  .-')    ('-.     _ (`-.              _  .-')   .-') _    \n" +
+                "\\  ( OO )                          \\  ( OO )  ( \\( -O ) _(  OO)   ( (OO  )            ( \\( -O ) (  OO) )   \n" +
+                " ;-----.\\ .-'),-----.  .-'),-----. ,--. ,--.   ,------.(,------. _.`     \\ .-'),-----. ,------. /     '._  \n" +
+                " | .-.  |( OO'  .-.  '( OO'  .-.  '|  .'   /   |   /`. '|  .---'(__...--''( OO'  .-.  '|   /`. '|'--...__) \n" +
+                " | '-' /_)   |  | |  |/   |  | |  ||      /,   |  /  | ||  |     |  /  | |/   |  | |  ||  /  | |'--.  .--' \n" +
+                " | .-. `.\\_) |  |\\|  |\\_) |  |\\|  ||     ' _)  |  |_.' (|  '--.  |  |_.' |\\_) |  |\\|  ||  |_.' |   |  |    \n" +
+                " | |  \\  | \\ |  | |  |  \\ |  | |  ||  .   \\    |  .  '.'|  .--'  |  .___.'  \\ |  | |  ||  .  '.'   |  |    \n" +
+                " | '--'  /  `'  '-'  '   `'  '-'  '|  |\\   \\   |  |\\  \\ |  `---. |  |        `'  '-'  '|  |\\  \\    |  |    \n" +
+                " `------'     `-----'      `-----' `--' '--'   `--' '--'`------' `--'          `-----' `--' '--'   `--'\n");
 
         List<CommunityDto> allCommunities = communityService.getAllCommunities();
         for (int i = 0; i < allCommunities.size(); i++) {
@@ -303,18 +319,18 @@ public class Main {
 
 
         if (command == 0) {
-            displayCommunityCenter();
+//            displayCommunityCenter();
             return;
         } else if (command > allCommunities.size() || command < 1) {
             System.out.println("다시 입력해주세요.");
-            displayMyCommunity();
+//            displayMyCommunity();
         }else {// 커뮤니티 상세
             System.out.println("제목 : "+ allCommunities.get(command).getTitle());
             System.out.println("내용 : "+ allCommunities.get(command).getCommunityContent());
             System.out.println("작성시간 : "+ allCommunities.get(command).getCreateAt());
         }
 
-        displayCommunityCenter();
+//        displayCommunityCenter();
     }
     public void displayCreateCommunity() throws SQLException, IOException {
         System.out.println("===독후감 작성===");
@@ -328,19 +344,27 @@ public class Main {
 
         int command = scan.nextInt();
         if(command == 0){
-            displayCommunityCenter();
+//            displayCommunityCenter();
             return;
         }
         if(command==1){
             String name = AuthenticationStorage.getAuthentication().getUserName();
             CommunityRequest request = new CommunityRequest(AuthenticationStorage.getAuthentication().getUserNo(), title, content, name);
             communityService.createCommunity(request);
-            displayCommunityCenter();
+//            displayCommunityCenter();
         }
     }
 
     public void displayMyCommunity() throws SQLException, IOException {
-        System.out.println("===내가 쓴 독후감===");
+        System.out.println(".-. .-')                           .-. .-')    _  .-')    ('-.     _ (`-.              _  .-')   .-') _    \n" +
+                "\\  ( OO )                          \\  ( OO )  ( \\( -O ) _(  OO)   ( (OO  )            ( \\( -O ) (  OO) )   \n" +
+                " ;-----.\\ .-'),-----.  .-'),-----. ,--. ,--.   ,------.(,------. _.`     \\ .-'),-----. ,------. /     '._  \n" +
+                " | .-.  |( OO'  .-.  '( OO'  .-.  '|  .'   /   |   /`. '|  .---'(__...--''( OO'  .-.  '|   /`. '|'--...__) \n" +
+                " | '-' /_)   |  | |  |/   |  | |  ||      /,   |  /  | ||  |     |  /  | |/   |  | |  ||  /  | |'--.  .--' \n" +
+                " | .-. `.\\_) |  |\\|  |\\_) |  |\\|  ||     ' _)  |  |_.' (|  '--.  |  |_.' |\\_) |  |\\|  ||  |_.' |   |  |    \n" +
+                " | |  \\  | \\ |  | |  |  \\ |  | |  ||  .   \\    |  .  '.'|  .--'  |  .___.'  \\ |  | |  ||  .  '.'   |  |    \n" +
+                " | '--'  /  `'  '-'  '   `'  '-'  '|  |\\   \\   |  |\\  \\ |  `---. |  |        `'  '-'  '|  |\\  \\    |  |    \n" +
+                " `------'     `-----'      `-----' `--' '--'   `--' '--'`------' `--'          `-----' `--' '--'   `--'\n");
 
         List<MyCommunity> myCommunityList = communityService.getMyCommunities(AuthenticationStorage.getAuthentication().getUserNo());
         for (int i = 0; i < myCommunityList.size(); i++) {
@@ -350,11 +374,11 @@ public class Main {
         int command = scan.nextInt();
 
         if (command == 0) {
-            displayCommunityCenter();
+//            displayCommunityCenter();
             return;
         } else if (command > myCommunityList.size() || command < 1) {
             System.out.println("다시 입력해주세요.");
-            displayMyCommunity();
+//            displayMyCommunity();
         }else {// 커뮤니티 상세
             System.out.println("제목 : "+ myCommunityList.get(command - 1).getTitle());
             System.out.println("내용 : "+ myCommunityList.get(command - 1).getCommunityContent());
@@ -430,7 +454,7 @@ public class Main {
             System.out.println("삭제를 취소하였습니다.");
         }
 
-        displayCommunityCenter();
+//        displayCommunityCenter();
 
     }
 
