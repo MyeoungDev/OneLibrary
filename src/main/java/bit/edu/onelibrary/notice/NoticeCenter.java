@@ -56,29 +56,29 @@ public class NoticeCenter {
 	public void displayList() {
 		ArrayList<BoardDTO> boardDTOS = boardService.readAll();
 		StringBuilder sb = new StringBuilder();
-		System.out.println("전체 목록");
-		System.out.println("번호\t제목\t\t\t\t글쓴이\t\t\t작성일");
+		System.out.println("[ 전체 목록 ]");
+		System.out.println("번호\t 제목\t\t\t\t글쓴이\t\t작성일");
 		for(int i = 0; i < boardDTOS.size() ; i++){
-			sb.append(boardDTOS.get(i).getBno()+"\t");
+			sb.append("  " + boardDTOS.get(i).getBno()+"\t");
 			sb.append(boardDTOS.get(i).getBtitle()+"\t\t");
 			sb.append(boardDTOS.get(i).getBwriter()+"\t\t");
-			sb.append(boardDTOS.get(i).getBdate());
+			sb.append(boardDTOS.get(i).getBdate()+"\n");
 		}
 		System.out.println(sb);
 	}
 
 	public void displayDetail(String bno,Scanner scan) {
-		System.out.println(bno+"번 상세 내용");
+		System.out.println("[ \n"+bno+"번 상세 내용 ]");
 		UserService userService = new UserService();
 		StringBuilder sb = new StringBuilder();
 		BoardDTO read = boardService.read(Integer.parseInt(bno));
 		if (Objects.isNull(read)) {
-			System.out.println("----------------------\n존재하지 않는 글입니다.\n----------------------");
+			System.out.println("-------------\n존재하지 않는 글입니다.\n-------------");
 			return;
 		}
-		sb.append("제목 : "+ read.getBtitle()+"\t\t");
-		sb.append("글쓴이 : "+ read.getBwriter()+"\t\t");
-		sb.append("날짜 : "+ read.getBdate());
+		sb.append("제목 : "+ read.getBtitle()+"\n");
+		sb.append("글쓴이 : "+ read.getBwriter()+"\n");
+		sb.append("날짜 : "+ read.getBdate()+"\n");
 		sb.append("내용 \n"+ read.getBcontent()+"\n");
 		System.out.print(sb);
 		try{
@@ -135,14 +135,14 @@ public class NoticeCenter {
 
 	public void displayMainMenu() {
 		System.out.println();
-		System.out.println("-----------------------------------------------------------------------");
+		System.out.println("------------------------------------------------");
 		System.out.println("메인메뉴: 1.작성 | 2.상세보기 | 3.전체삭제 | 4.나가기");
 		System.out.print("메뉴선택: ");
 		
 	}
 	public void userDisplayMainMenu() {
 		System.out.println();
-		System.out.println("-----------------------------------------------------------------------");
+		System.out.println("------------------------------------------------");
 		System.out.println("메인메뉴: 1.상세보기 | 2.나가기");
 		System.out.print("메뉴선택: ");
 
@@ -150,7 +150,7 @@ public class NoticeCenter {
 
 	public boolean displayConfirm(Scanner scan) {
 		boolean flag = false;
-		System.out.println("-------------------------------------------------------------------");
+		System.out.println("------------------------------------------------");
 		System.out.println("메뉴: 1.확인 | 2.취소");
 		System.out.print("메뉴선택: ");
 		String command = scan.nextLine();
@@ -161,12 +161,12 @@ public class NoticeCenter {
 	}
 
 	public void displaySubMenu() {
-		System.out.println("-------------------------------------------------------------------");
+		System.out.println("------------------------------------------------");
 		System.out.println("메뉴: 1.수정 | 2.삭제 | 3.목록으로 돌아가기");
 		System.out.print("메뉴선택: ");
 	}
 	public void userDisplaySubMenu() {
-		System.out.println("-------------------------------------------------------------------");
+		System.out.println("------------------------------------------------");
 		System.out.println("메뉴: 1.목록으로 돌아가기");
 		System.out.print("메뉴선택: ");
 	}
