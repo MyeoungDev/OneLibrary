@@ -151,7 +151,11 @@ public class Main {
                 } else {
                     System.out.println("\n아이디나 비밀번호가 잘못되었습니다. 다시 시도해주세요.\n");
                 }
+            } else{
+                System.out.println("잘못된 입력입니다. 다시 시도해주세요.");
             }
+
+
         }
     }
 
