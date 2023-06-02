@@ -81,10 +81,11 @@ public class Main {
     public void displayNotice() {
         UserService userService = new UserService();
         try {
-            System.out.println("--------------공지사항--------------");
+            System.out.println("\n\n========== 공지사항 ==========");
             this.displayAuth(userService.isAdmin());
         } catch (NullPointerException e) {
-            System.out.println("비회원 입니다.");
+            System.out.println("* 비회원으로 이용중입니다.");
+            System.out.println("-----------------------------");
             this.displayAuth(false);
         }
     }
