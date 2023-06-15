@@ -218,7 +218,6 @@ public class Main {
                 System.out.println("회원가입을 다시 시도해주세요.");
                 this.displayRegister();
             } else {
-                System.out.println("------------------------");
                 System.out.println("\n1.확인  2.메인으로");
                 System.out.print("* 메뉴선택: ");
                 String command = scan.nextLine();
@@ -324,8 +323,10 @@ public class Main {
             System.out.println(i +1 + ". " + allCommunities.get(i).getTitle());
         }
 
-        System.out.println("0. 이전 페이지로");
+        System.out.println("\n0. 이전 페이지로");
         int command;
+
+        System.out.println("* 메뉴 입력: ");
         command = scan.nextInt();
 
 
@@ -337,9 +338,12 @@ public class Main {
 //            displayMyCommunity();
         }else {// 커뮤니티 상세
             CommunityDto selectedCommunity = allCommunities.get(command - 1);
+            System.out.println("------------------------------------------------");
             System.out.println("제목 : "+ selectedCommunity.getTitle());
-            System.out.println("내용 : "+ selectedCommunity.getCommunityContent());
-            System.out.println("작성시간 : "+ selectedCommunity.getCreateAt());
+            System.out.println("작성시간 : "+ selectedCommunity.getCreateAt() + "\n");
+            System.out.println("[ 내용 ]\n "+ selectedCommunity.getCommunityContent());
+            System.out.println("------------------------------------------------\n");
+
 
             UserAuthenticationDto authentication = AuthenticationStorage.getAuthentication();
 
@@ -348,8 +352,8 @@ public class Main {
 
                 System.out.println("1. 수정");
                 System.out.println("2. 삭제");
-                System.out.println("0. 목록으로");
-
+                System.out.println("\n0. 목록으로");
+                System.out.print("* 메뉴 선택: ");
                 int menuCommand = scan.nextInt();
 
                 switch (menuCommand){
@@ -372,15 +376,17 @@ public class Main {
 //        displayCommunityCenter();
     }
     public void displayCreateCommunity() throws SQLException, IOException {
-        System.out.println("===독후감 작성===");
-        System.out.println("제목 : ");
+        System.out.println("============= 독후감 작성 =============");
+        System.out.print("제목 : ");
         String title = scan.nextLine();
-        System.out.println("내용 : ");
+        System.out.print("내용 : ");
         String content = scan.nextLine();
+        System.out.println("===================================");
 
         System.out.println("0. 작성 취소");
         System.out.println("1. 작성 완료");
 
+        System.out.print("* 메뉴 선택: ");
         int command = scan.nextInt();
         if(command == 0){
 //            displayCommunityCenter();
@@ -409,7 +415,7 @@ public class Main {
         for (int i = 0; i < myCommunityList.size(); i++) {
             System.out.println(i + 1 + ". " + myCommunityList.get(i).getTitle());
         }
-        System.out.println("0. 이전 페이지로");
+        System.out.println("\n\n0. 이전 페이지로");
         int command = scan.nextInt();
 
         if (command == 0) {
@@ -419,14 +425,18 @@ public class Main {
             System.out.println("다시 입력해주세요.");
 //            displayMyCommunity();
         }else {// 커뮤니티 상세
+            System.out.println("\n------------------------------------------------");
             System.out.println("제목 : "+ myCommunityList.get(command - 1).getTitle());
             System.out.println("내용 : "+ myCommunityList.get(command - 1).getCommunityContent());
             System.out.println("작성시간 : "+ myCommunityList.get(command - 1).getCreateAt());
+            System.out.println("------------------------------------------------");
+
 
             System.out.println("1. 수정");
             System.out.println("2. 삭제");
-            System.out.println("0. 목록으로");
+            System.out.println("\n0. 목록으로");
 
+            System.out.print("* 메뉴 선택: ");
             int menuCommand = scan.nextInt();
 
 
