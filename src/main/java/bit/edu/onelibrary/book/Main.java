@@ -18,14 +18,19 @@ import org.json.simple.JSONObject;
  **/
 public class Main {
     public static void main(String[] args) {
+        // BookDao 객체를 생성합니다.
         BookDao bookDao = new BookDao();
+        // BookService 객체를 생성합니다. 생성자에 BookDao 객체를 전달합니다.
         BookService bookService = new BookService(bookDao);
 
+        // BookService 객체의 findBookList() 메소드를 호출하여 책 목록을 조회합니다.
         List<BookDto> bookList = bookService.findBookList();
 
+        // 조회한 책 목록을 JSON 문자열로 변환합니다.
         String bookListJsonString = JsonParser.listToJsonString(bookList);
 
         try {
+            // FileUtils 클래스의 writeJsonFile() 메소드를 호출하여 JSON 파일을 생성합니다.
             FileUtils.writeJsonFile(bookListJsonString);
         } catch (IOException e) {
             e.printStackTrace();
